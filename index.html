@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A findings-first argument for right-sized household AI: match each job to a proven capability, an allowed device, and a clear authority boundary.">
+  <meta name="robots" content="noindex,nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Your home does not need one giant AI">
+  <meta property="og:description" content="Household AI should match each job to the right capability, device, data boundary, and level of authority.">
+  <title>Your home does not need one giant AI</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #151815;
+      --muted: #5b625c;
+      --paper: #f2eee4;
+      --panel: #fbfaf5;
+      --line: #c8c2b5;
+      --lime: #d9ff67;
+      --coral: #ff6848;
+      --green: #1d6856;
+      --soft-green: #dfeee7;
+      --soft-coral: #fae4dc;
+      --max: 1180px;
+      --shadow: 0 22px 60px rgba(21, 24, 21, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-underline-offset: .22em; }
+    button { color: inherit; font: inherit; }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--coral);
+      outline-offset: 4px;
+    }
+    .skip {
+      position: absolute;
+      left: 1rem;
+      top: -5rem;
+      z-index: 100;
+      padding: .7rem 1rem;
+      background: var(--ink);
+      color: white;
+    }
+    .skip:focus { top: 1rem; }
+    .wrap { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+
+    .topbar {
+      position: relative;
+      z-index: 20;
+      border-bottom: 1px solid rgba(21, 24, 21, .18);
+      background: var(--paper);
+    }
+    .topbar .wrap {
+      min-height: 4.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 1.15rem;
+      height: 1.15rem;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      box-shadow: .36rem .2rem 0 var(--coral);
+    }
+    .nav { display: flex; gap: 1.35rem; font-size: .82rem; font-weight: 720; }
+    .nav a { text-decoration: none; }
+    .nav a:hover { text-decoration: underline; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 30rem;
+      height: 30rem;
+      left: -15rem;
+      bottom: -19rem;
+      border-radius: 50%;
+      background: var(--lime);
+      opacity: .58;
+    }
+    .hero-grid {
+      position: relative;
+      min-height: calc(100vh - 4.15rem);
+      padding: clamp(4rem, 9vw, 8rem) 0 clamp(4rem, 8vw, 7rem);
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(20rem, .82fr);
+      align-items: center;
+      gap: clamp(2.5rem, 7vw, 6.5rem);
+    }
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--green);
+      font-size: .73rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 10ch;
+      margin-bottom: 1.35rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(4rem, 8.8vw, 8rem);
+      font-weight: 500;
+      letter-spacing: -.065em;
+      line-height: .88;
+    }
+    .hero-copy {
+      max-width: 45rem;
+      color: var(--muted);
+      font-size: clamp(1.08rem, 2vw, 1.35rem);
+    }
+    .hero-copy strong { color: var(--ink); font-weight: 760; }
+    .hero-action {
+      display: inline-flex;
+      min-height: 3rem;
+      margin-top: 1.2rem;
+      align-items: center;
+      justify-content: center;
+      padding: .72rem 1.05rem;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .hero-action::after { content: "v"; margin-left: .55rem; color: var(--lime); }
+
+    .job-board {
+      position: relative;
+      padding: 1.15rem;
+      border: 1px solid var(--ink);
+      border-radius: 1rem;
+      background: var(--panel);
+      box-shadow: 1.15rem 1.15rem 0 var(--coral);
+      transform: rotate(1.5deg);
+    }
+    .job-board h2 {
+      max-width: 12ch;
+      margin: .25rem 0 1rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.65rem, 3vw, 2.4rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.02;
+    }
+    .job {
+      display: grid;
+      grid-template-columns: 2.25rem minmax(0, 1fr);
+      gap: .7rem;
+      padding: .8rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .job-code {
+      width: 2.1rem;
+      height: 2.1rem;
+      display: grid;
+      place-items: center;
+      border-radius: .5rem;
+      background: var(--ink);
+      color: var(--lime);
+      font-size: .68rem;
+      font-weight: 900;
+    }
+    .job b { display: block; font-size: .88rem; }
+    .job span { color: var(--muted); font-size: .76rem; }
+    .board-note {
+      margin: .9rem 0 0;
+      padding: .75rem;
+      background: var(--soft-green);
+      font-size: .78rem;
+      font-weight: 720;
+    }
+
+    .section { padding: clamp(4.8rem, 9vw, 8rem) 0; }
+    .section-label {
+      margin: 0 0 .8rem;
+      color: var(--green);
+      font-size: .71rem;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .section-intro {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(20rem, 1.1fr);
+      align-items: end;
+      gap: clamp(1.5rem, 5vw, 5rem);
+      margin-bottom: 3rem;
+    }
+    h2 {
+      margin-bottom: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.7rem, 5.5vw, 5.25rem);
+      font-weight: 500;
+      letter-spacing: -.055em;
+      line-height: .94;
+    }
+    .section-intro > p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .findings { border-bottom: 1px solid var(--line); }
+    .finding {
+      display: grid;
+      grid-template-columns: 4.6rem minmax(13rem, .75fr) minmax(20rem, 1.25fr);
+      gap: 1.4rem;
+      padding: 1.65rem 0;
+      border-top: 1px solid var(--line);
+      align-items: start;
+    }
+    .finding-number {
+      width: 2.7rem;
+      height: 2.7rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-weight: 850;
+    }
+    .finding h3 {
+      margin: .15rem 0 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 2.4vw, 2.1rem);
+      font-weight: 500;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+    }
+    .finding p { margin: .2rem 0 0; color: var(--muted); }
+
+    .how {
+      background: var(--ink);
+      color: #f8f5eb;
+    }
+    .how .section-label { color: var(--lime); }
+    .how .section-intro > p { color: #c9d0ca; }
+    .case-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-bottom: 1.2rem;
+    }
+    .case-picker button {
+      min-height: 2.6rem;
+      padding: .55rem .85rem;
+      border: 1px solid #667069;
+      border-radius: 999px;
+      background: transparent;
+      color: #edf1ed;
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 750;
+    }
+    .case-picker button[aria-pressed="true"] {
+      border-color: var(--lime);
+      background: var(--lime);
+      color: var(--ink);
+    }
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border: 1px solid #596159;
+      border-radius: 1rem;
+      background: #222722;
+      box-shadow: var(--shadow);
+    }
+    .step {
+      min-height: 13.5rem;
+      position: relative;
+      padding: 1.05rem;
+      border-right: 1px solid #596159;
+    }
+    .step:last-child { border-right: 0; }
+    .step:not(:last-child)::after {
+      content: ">";
+      width: 1.7rem;
+      height: 1.7rem;
+      position: absolute;
+      z-index: 2;
+      right: -.88rem;
+      top: 1.1rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid #596159;
+      border-radius: 50%;
+      background: var(--ink);
+      color: var(--lime);
+      font-weight: 900;
+    }
+    .step-number {
+      display: block;
+      margin-bottom: 3rem;
+      color: var(--lime);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+    }
+    .step small {
+      display: block;
+      margin-bottom: .35rem;
+      color: #9ba49d;
+      font-size: .67rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .step strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.04rem;
+      font-weight: 500;
+      line-height: 1.25;
+    }
+    .fallback {
+      margin: 1rem 0 0;
+      padding: .9rem 1rem;
+      border-left: 4px solid var(--coral);
+      background: #2b302b;
+      color: #cbd1cc;
+      font-size: .84rem;
+    }
+    .fallback b { color: white; }
+
+    .examples { border-bottom: 1px solid var(--line); }
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .example {
+      min-height: 20rem;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: var(--panel);
+    }
+    .example:nth-child(2), .example:nth-child(3) { background: #e8efe9; }
+    .example-tag {
+      display: inline-block;
+      align-self: flex-start;
+      padding: .26rem .45rem;
+      border-radius: .28rem;
+      background: var(--soft-coral);
+      color: #7c2d20;
+      font-size: .67rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .example h3 {
+      max-width: 20ch;
+      margin: 2.2rem 0 .7rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.6rem, 3vw, 2.45rem);
+      font-weight: 500;
+      letter-spacing: -.035em;
+      line-height: 1.02;
+    }
+    .example > p { color: var(--muted); }
+    .boundary {
+      margin-top: auto;
+      padding-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      border-top: 1px solid var(--line);
+      font-size: .79rem;
+    }
+    .boundary b { display: block; margin-bottom: .2rem; color: var(--green); }
+    .boundary div:last-child b { color: #9b3f2e; }
+
+    .implications {
+      background: #ded8cc;
+      border-bottom: 1px solid var(--line);
+    }
+    .audiences {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      gap: 1px;
+    }
+    .audience {
+      min-height: 22rem;
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+    }
+    .audience small {
+      color: var(--green);
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .audience h3 {
+      margin: 2.6rem 0 .7rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2rem;
+      font-weight: 500;
+      letter-spacing: -.035em;
+    }
+    .audience p { color: var(--muted); }
+    .audience strong {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-size: .82rem;
+      line-height: 1.45;
+    }
+
+    .paper { background: var(--coral); }
+    .paper-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 2rem;
+    }
+    .paper h2 { max-width: 13ch; font-size: clamp(2.7rem, 6vw, 5.7rem); }
+    .paper p { max-width: 43rem; margin: 1.1rem 0 0; color: #4a1d16; }
+    .paper-link {
+      min-height: 3.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: .75rem 1.1rem;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      font-weight: 820;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .paper-link::after { content: "PDF"; margin-left: .7rem; color: var(--lime); font-size: .67rem; letter-spacing: .08em; }
+
+    footer {
+      padding: 1.7rem 0;
+      background: var(--ink);
+      color: #bfc7c0;
+      font-size: .75rem;
+    }
+    footer .wrap { display: flex; justify-content: space-between; gap: 1.5rem; }
+
+    @media (max-width: 880px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
+      .job-board { max-width: 34rem; transform: rotate(.6deg); }
+      .section-intro { grid-template-columns: 1fr; align-items: start; }
+      .finding { grid-template-columns: 3.7rem minmax(0, .8fr) minmax(0, 1.2fr); }
+      .flow { grid-template-columns: 1fr; }
+      .step { min-height: 8.5rem; padding: 1rem 1rem 1rem 4.3rem; border-right: 0; border-bottom: 1px solid #596159; }
+      .step:last-child { border-bottom: 0; }
+      .step-number { position: absolute; left: 1rem; top: 1.1rem; margin: 0; }
+      .step:not(:last-child)::after {
+        content: "v";
+        right: auto;
+        left: 1.35rem;
+        top: auto;
+        bottom: -.88rem;
+      }
+      .examples .section-intro { margin-bottom: 2rem; }
+      .audiences { grid-template-columns: 1fr; }
+      .audience { min-height: 17rem; }
+      .paper-box { grid-template-columns: 1fr; align-items: start; }
+      .paper-link { justify-self: start; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(calc(100% - 1.25rem), var(--max)); }
+      .topbar .wrap { min-height: 3.7rem; }
+      .nav a { display: none; }
+      .nav a:first-child { display: inline; }
+      .hero-grid { padding-top: 3.4rem; }
+      h1 { font-size: clamp(3.35rem, 18vw, 5.4rem); }
+      .job-board { margin-right: .7rem; box-shadow: .7rem .7rem 0 var(--coral); }
+      .finding { grid-template-columns: 3rem 1fr; gap: .75rem; }
+      .finding p { grid-column: 2; }
+      .example-grid { grid-template-columns: 1fr; }
+      .example { min-height: 18rem; }
+      .boundary { grid-template-columns: 1fr; }
+      .case-picker { display: grid; grid-template-columns: 1fr 1fr; }
+      .case-picker button { width: 100%; }
+      footer .wrap { display: block; }
+      footer span { display: block; margin-top: .35rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Household AI</a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#findings">Findings</a>
+        <a href="#how">How it works</a>
+        <a href="#examples">Examples</a>
+        <a href="#implications">Implications</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">A better default for household intelligence</p>
+          <h1>Your home does not need one giant AI.</h1>
+          <p class="hero-copy">It needs a small set of trusted capabilities&mdash;each matched to the job, the person, and the available device&mdash;with a clear handoff when the task exceeds its limits. <strong>People should get the result without managing the machinery.</strong></p>
+          <a class="hero-action" href="#how">See how it works</a>
+        </div>
+
+        <aside class="job-board" aria-label="Four household jobs with different requirements">
+          <p class="eyebrow">The same home. Different rules.</p>
+          <h2>These are not one workload.</h2>
+          <div class="job"><span class="job-code" aria-hidden="true">$</span><div><b>Explain a bill increase</b><span>Private, evidence-backed, read-only</span></div></div>
+          <div class="job"><span class="job-code" aria-hidden="true">1/2</span><div><b>Help with fractions</b><span>Age-aware, instructional, no answer-taking</span></div></div>
+          <div class="job"><span class="job-code" aria-hidden="true">!</span><div><b>Diagnose a leak</b><span>Manual-grounded with a safety cutoff</span></div></div>
+          <div class="job"><span class="job-code" aria-hidden="true">+</span><div><b>Plan the groceries</b><span>Shared context without merging private data</span></div></div>
+          <p class="board-note">One default model, data boundary, and level of authority cannot fit all four.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section findings" id="findings">
+      <div class="wrap">
+        <p class="section-label">What the research says</p>
+        <div class="section-intro">
+          <h2>Five findings change the design.</h2>
+          <p>The useful question is not simply which model is smartest. It is which option has shown it can do this job, which device may handle the information, and what the system is allowed to do next.</p>
+        </div>
+
+        <article class="finding">
+          <span class="finding-number">1</span>
+          <h3>A home is not one workload.</h3>
+          <p>Scheduling, shopping, bills, learning, care, accessibility, entertainment, and safety differ in privacy, urgency, consequences, and who may act. Treating them as one generic chat problem hides the decisions that matter.</p>
+        </article>
+        <article class="finding">
+          <span class="finding-number">2</span>
+          <h3>Bigger is not the right default.</h3>
+          <p>The best option may be a simple rule, a small specialist, a general model, a remote service, or a person. Use the least demanding option shown to meet the bar&mdash;then escalate when it cannot.</p>
+        </article>
+        <article class="finding">
+          <span class="finding-number">3</span>
+          <h3>Capable does not mean authorized.</h3>
+          <p>A television may have an idle accelerator and still be the wrong place for financial records or a child&rsquo;s schoolwork. Available computing power is not automatically authorized computing power.</p>
+        </article>
+        <article class="finding">
+          <span class="finding-number">4</span>
+          <h3>The model can change. The promise cannot.</h3>
+          <p>What a capability does, which information it uses, what it may control, when it asks permission, and how it recovers should remain stable as models and hardware improve.</p>
+        </article>
+        <article class="finding">
+          <span class="finding-number">5</span>
+          <h3>The lasting value sits above the model.</h3>
+          <p>What compounds is trusted knowledge of household jobs, permissions, corrections, and successful outcomes. The strongest product knows when to refuse, ask, verify, undo, or hand the task to someone else.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section how" id="how">
+      <div class="wrap">
+        <p class="section-label">How it works</p>
+        <div class="section-intro">
+          <h2>One request. Five plain-language decisions.</h2>
+          <p>Choose an example to see how the same path changes with the job. The household never needs to choose a model or processor.</p>
+        </div>
+
+        <div class="case-picker" role="group" aria-label="Choose a household example">
+          <button type="button" data-case="bill" aria-pressed="true">Bill increase</button>
+          <button type="button" data-case="homework" aria-pressed="false">Homework help</button>
+          <button type="button" data-case="appliance" aria-pressed="false">Appliance leak</button>
+          <button type="button" data-case="groceries" aria-pressed="false">Grocery plan</button>
+        </div>
+
+        <div class="flow" aria-live="polite" aria-label="Household request path">
+          <article class="step"><span class="step-number">01</span><small>The request</small><strong id="flow-request">Why did our power bill jump?</strong></article>
+          <article class="step"><span class="step-number">02</span><small>Set the boundaries</small><strong id="flow-boundary">This account; read-only; no payments</strong></article>
+          <article class="step"><span class="step-number">03</span><small>Choose a proven option</small><strong id="flow-match">Bill checker on the home hub</strong></article>
+          <article class="step"><span class="step-number">04</span><small>Check the result</small><strong id="flow-check">Cite the rate and usage evidence</strong></article>
+          <article class="step"><span class="step-number">05</span><small>Finish or hand off</small><strong id="flow-outcome">Explain or draft; ask before action</strong></article>
+        </div>
+        <p class="fallback"><b>The fallback rule:</b> the system may use another allowed device, a remote model, or a person, but fallback never loosens the original privacy, quality, or authority limits.</p>
+      </div>
+    </section>
+
+    <section class="section examples" id="examples">
+      <div class="wrap">
+        <p class="section-label">What this feels like at home</p>
+        <div class="section-intro">
+          <h2>Useful because the boundaries are visible.</h2>
+          <p>Each capability is designed around a recognizable outcome and an equally recognizable stopping point.</p>
+        </div>
+
+        <div class="example-grid">
+          <article class="example">
+            <span class="example-tag">Household admin</span>
+            <h3>Catch a bill increase without moving money.</h3>
+            <p>A trusted device compares the statement with previous charges and shows the evidence behind the change.</p>
+            <div class="boundary"><div><b>It can</b>Explain the increase and draft a question.</div><div><b>It stops before</b>Paying, cancelling, or closing an account.</div></div>
+          </article>
+          <article class="example">
+            <span class="example-tag">Learning</span>
+            <h3>Help a child learn without doing the work.</h3>
+            <p>The capability uses assigned material and the child&rsquo;s permitted school context to teach the next step.</p>
+            <div class="boundary"><div><b>It can</b>Explain, prompt, and check understanding.</div><div><b>It stops before</b>Completing assessed work or leaving its age range.</div></div>
+          </article>
+          <article class="example">
+            <span class="example-tag">Maintenance</span>
+            <h3>Troubleshoot an appliance without crossing a safety line.</h3>
+            <p>The system finds the exact model and manual before suggesting bounded checks supported by that source.</p>
+            <div class="boundary"><div><b>It can</b>Guide low-risk, manual-supported checks.</div><div><b>It stops before</b>Electrical, gas, structural, or warranty-voiding work.</div></div>
+          </article>
+          <article class="example">
+            <span class="example-tag">Shared planning</span>
+            <h3>Plan groceries without merging private lives.</h3>
+            <p>The household combines authorized lists, inventory, allergies, and shared preferences, then returns suggestions to the requester.</p>
+            <div class="boundary"><div><b>It can</b>Suggest substitutions and update a shared list.</div><div><b>It stops before</b>Using personal information that was never shared.</div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section implications" id="implications">
+      <div class="wrap">
+        <p class="section-label">Who should care</p>
+        <div class="section-intro">
+          <h2>The control point moves above the model.</h2>
+          <p>Model choice still matters. It simply becomes one replaceable input inside a product that owns the outcome, permission, placement, validation, and recovery.</p>
+        </div>
+        <div class="audiences">
+          <article class="audience">
+            <small>For builders</small>
+            <h3>Start with the household job.</h3>
+            <p>Define the useful result, the minimum information it needs, what it must never do, when approval is required, and how correction works. Keep the model as an implementation choice, not the product identity.</p>
+            <strong>Build the promise first. Bind models and devices second.</strong>
+          </article>
+          <article class="audience">
+            <small>For device makers</small>
+            <h3>Prove useful work, not peak AI.</h3>
+            <p>Devices will be judged by real household jobs under actual memory, battery, heat, privacy, and foreground-use constraints. Quiet, always-on coordination may matter as much as headline accelerator performance.</p>
+            <strong>Publish measured capability envelopes, not only TOPS.</strong>
+          </article>
+          <article class="audience">
+            <small>For investors</small>
+            <h3>Model access is not the moat.</h3>
+            <p>Look for trusted outcomes, permission relationships, task evidence, cross-device reach, and strong recovery behavior. Count portfolio maintenance and routing mistakes as real costs.</p>
+            <strong>The thesis loses if one compact general model does the same job with less complexity.</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper" id="paper">
+      <div class="wrap paper-box">
+        <div>
+          <p class="section-label">Optional depth</p>
+          <h2>Want the evidence and full argument?</h2>
+          <p>The paper covers the research context, technical proposal, limitations, and the tests that could prove this thesis wrong. The public story stops here; the research machinery does not need to become the interface.</p>
+        </div>
+        <a class="paper-link" href="./paper.pdf">Read the paper</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap"><span>Household AI, right-sized.</span><span>Research synthesis and design hypothesis, not empirical validation.</span></div>
+  </footer>
+
+  <script>
+    const scenarios = {
+      bill: {
+        request: "Why did our power bill jump?",
+        boundary: "This account; read-only; no payments",
+        match: "Bill checker on the home hub",
+        check: "Cite the rate and usage evidence",
+        outcome: "Explain or draft; ask before action"
+      },
+      homework: {
+        request: "Help me understand this fraction problem",
+        boundary: "Child profile; assigned material only",
+        match: "Math tutor on the tablet",
+        check: "Teach the next step; do not complete",
+        outcome: "Check understanding or ask a guardian"
+      },
+      appliance: {
+        request: "Why is the dishwasher leaking?",
+        boundary: "Exact manual; low-risk checks only",
+        match: "Manual specialist on phone or hub",
+        check: "Verify every step against the manual",
+        outcome: "Try safely or stop for service"
+      },
+      groceries: {
+        request: "Plan dinners and update the list",
+        boundary: "Shared list; private notes stay private",
+        match: "Meal planner on the household hub",
+        check: "Validate allergies, stock, and substitutions",
+        outcome: "Suggest on phone; confirm before ordering"
+      }
+    };
+
+    const fields = {
+      request: document.getElementById("flow-request"),
+      boundary: document.getElementById("flow-boundary"),
+      match: document.getElementById("flow-match"),
+      check: document.getElementById("flow-check"),
+      outcome: document.getElementById("flow-outcome")
+    };
+
+    document.querySelectorAll("[data-case]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const scenario = scenarios[button.dataset.case];
+        document.querySelectorAll("[data-case]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+        Object.entries(fields).forEach(([key, node]) => {
+          node.textContent = scenario[key];
+        });
+      });
+    });
+  </script>
+</body>
+</html>
