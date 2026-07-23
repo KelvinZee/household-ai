@@ -48,9 +48,18 @@
     }
     a { color: inherit; text-underline-offset: .22em; }
     button { color: inherit; font: inherit; }
-    a:focus-visible, button:focus-visible {
+    a:focus-visible, button:focus-visible, select:focus-visible {
       outline: 3px solid var(--coral);
       outline-offset: 4px;
+    }
+    .visually-hidden {
+      width: 1px;
+      height: 1px;
+      position: absolute;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
     .skip {
       position: absolute;
@@ -295,61 +304,414 @@
       background: var(--lime);
       color: var(--ink);
     }
-    .flow {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+    .arch-explorer {
+      overflow: hidden;
       border: 1px solid #596159;
       border-radius: 1rem;
-      background: #222722;
+      background: #202520;
       box-shadow: var(--shadow);
     }
-    .step {
-      min-height: 13.5rem;
-      position: relative;
-      padding: 1.05rem;
-      border-right: 1px solid #596159;
-    }
-    .step:last-child { border-right: 0; }
-    .step:not(:last-child)::after {
-      content: ">";
-      width: 1.7rem;
-      height: 1.7rem;
-      position: absolute;
-      z-index: 2;
-      right: -.88rem;
-      top: 1.1rem;
+    .arch-toolbar {
       display: grid;
-      place-items: center;
-      border: 1px solid #596159;
-      border-radius: 50%;
-      background: var(--ink);
-      color: var(--lime);
-      font-weight: 900;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: end;
+      padding: 1rem 1.1rem;
+      border-bottom: 1px solid #596159;
+      background: #292f29;
     }
-    .step-number {
-      display: block;
-      margin-bottom: 3rem;
+    .arch-kicker {
+      margin: 0 0 .25rem;
       color: var(--lime);
-      font-size: .72rem;
+      font-size: .65rem;
       font-weight: 900;
-      letter-spacing: .1em;
+      letter-spacing: .13em;
+      text-transform: uppercase;
     }
-    .step small {
+    .arch-request {
+      margin: 0;
+      color: #aeb6af;
+      font-size: .75rem;
+    }
+    .arch-request span {
       display: block;
-      margin-bottom: .35rem;
-      color: #9ba49d;
-      font-size: .67rem;
+      margin-bottom: .1rem;
+      color: #8f9991;
+      font-size: .62rem;
+      font-weight: 850;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .arch-request strong {
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .arch-stress {
+      min-width: min(100%, 16rem);
+    }
+    .arch-stress label {
+      display: block;
+      margin-bottom: .3rem;
+      color: #b8c0b9;
+      font-size: .64rem;
       font-weight: 850;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .step strong {
-      display: block;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.04rem;
-      font-weight: 500;
-      line-height: 1.25;
+    .arch-stress select {
+      width: 100%;
+      min-height: 2.65rem;
+      padding: .55rem 2.2rem .55rem .7rem;
+      border: 1px solid #758078;
+      border-radius: .45rem;
+      background: #151815;
+      color: white;
+      font: inherit;
+      font-size: .78rem;
+      font-weight: 720;
+      cursor: pointer;
     }
+    .arch-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
+      min-width: 0;
+    }
+    .arch-stage {
+      min-width: 0;
+      padding: 1.1rem;
+      border-right: 1px solid #596159;
+    }
+    .arch-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(8.4rem, auto));
+      gap: 2rem;
+      position: relative;
+    }
+    .arch-node {
+      min-width: 0;
+      min-height: 8.4rem;
+      position: relative;
+      padding: .75rem;
+      border: 1px solid #6a746d;
+      border-radius: .65rem;
+      background: #292f29;
+      color: #eef2ee;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .16s ease, background .16s ease, transform .16s ease;
+    }
+    .arch-node:hover { border-color: #aeb7b0; transform: translateY(-2px); }
+    .arch-node::after {
+      width: 1.3rem;
+      height: 1.3rem;
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      color: var(--lime);
+      font-size: 1.25rem;
+      font-weight: 750;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .arch-node--graph { grid-column: 1; grid-row: 1; }
+    .arch-node--policy { grid-column: 2; grid-row: 1; }
+    .arch-node--router { grid-column: 3; grid-row: 1; }
+    .arch-node--execution { grid-column: 4; grid-row: 1; }
+    .arch-node--validator { grid-column: 4; grid-row: 2; }
+    .arch-node--action { grid-column: 3; grid-row: 2; }
+    .arch-node--receipt { grid-column: 2; grid-row: 2; }
+    .arch-node--graph::after,
+    .arch-node--policy::after,
+    .arch-node--router::after {
+      content: "→";
+      right: -1.68rem;
+      top: calc(50% - .65rem);
+    }
+    .arch-node--execution::after {
+      content: "↓";
+      right: calc(50% - .65rem);
+      bottom: -1.68rem;
+    }
+    .arch-node--validator::after,
+    .arch-node--action::after,
+    .arch-node--receipt::after {
+      content: "←";
+      left: -1.68rem;
+      top: calc(50% - .65rem);
+    }
+    .arch-return {
+      grid-column: 1;
+      grid-row: 2;
+      align-self: center;
+      color: #99a39b;
+      font-size: .65rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      line-height: 1.4;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .arch-node-plane {
+      display: block;
+      margin-bottom: .4rem;
+      color: #aeb7b0;
+      font-size: .58rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .arch-node strong {
+      display: block;
+      margin-bottom: .35rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: .96rem;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    .arch-node-detail {
+      display: block;
+      color: #b9c1ba;
+      font-size: .66rem;
+      line-height: 1.35;
+    }
+    .arch-node-state {
+      display: inline-flex;
+      margin-top: .65rem;
+      padding: .17rem .38rem;
+      border: 1px solid #657067;
+      border-radius: 999px;
+      color: #c6cdc7;
+      font-size: .54rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .arch-node[data-state="active"] {
+      border: 2px solid var(--lime);
+      background: #333a31;
+      box-shadow: 0 0 0 3px rgba(217, 255, 103, .12);
+    }
+    .arch-node[data-state="active"] .arch-node-state {
+      border-color: var(--lime);
+      color: var(--lime);
+    }
+    .arch-node[data-state="complete"] {
+      border-style: solid;
+      border-color: #86b9a9;
+      background: #24352f;
+    }
+    .arch-node[data-state="complete"] .arch-node-state { color: #b8e6d6; }
+    .arch-node[data-state="rerouted"] {
+      border: 2px dashed var(--coral);
+      background: #382d28;
+    }
+    .arch-node[data-state="rerouted"] .arch-node-state {
+      border-color: var(--coral);
+      color: #ffad98;
+    }
+    .arch-node[data-state="blocked"] {
+      border: 2px solid var(--coral);
+      background: #3b2723;
+    }
+    .arch-node[data-state="blocked"] .arch-node-state {
+      border-color: var(--coral);
+      color: #ffad98;
+    }
+    .arch-node[data-state="skipped"] {
+      border-style: dotted;
+      opacity: .6;
+    }
+    .arch-node[data-state="recorded"] {
+      border: 3px double var(--lime);
+      background: #29352a;
+    }
+    .arch-node[data-state="recorded"] .arch-node-state { color: var(--lime); }
+    .arch-step-nav {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: .75rem;
+      align-items: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #4e574f;
+    }
+    .arch-step-nav button {
+      min-height: 2.45rem;
+      padding: .45rem .7rem;
+      border: 1px solid #758078;
+      border-radius: .45rem;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+    .arch-step-nav button:disabled { opacity: .38; cursor: not-allowed; }
+    .arch-step-count {
+      color: #aeb7b0;
+      font-size: .68rem;
+      font-weight: 800;
+      text-align: center;
+    }
+    .arch-detail {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid #596159;
+      border-radius: .7rem;
+      background: #181c18;
+    }
+    .arch-detail-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      margin-bottom: .8rem;
+    }
+    .arch-step-kicker {
+      margin: 0 0 .15rem;
+      color: var(--lime);
+      font-size: .58rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .arch-detail h3 {
+      margin: 0 0 .28rem;
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.28rem;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    .arch-step-status {
+      max-width: 47rem;
+      margin: 0;
+      color: #c2c9c3;
+      font-size: .75rem;
+    }
+    .arch-result {
+      display: inline-flex;
+      padding: .27rem .48rem;
+      border: 1px solid #758078;
+      border-radius: 999px;
+      color: #d9dfda;
+      font-size: .55rem;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .arch-result[data-result="passed"] { border-color: var(--lime); color: var(--lime); }
+    .arch-result[data-result="rerouted"] { border-style: dashed; border-color: var(--coral); color: #ffad98; }
+    .arch-result[data-result="stopped"],
+    .arch-result[data-result="failed"],
+    .arch-result[data-result="deferred"] { border-color: var(--coral); color: #ffad98; }
+    .arch-boundary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .65rem;
+    }
+    .arch-boundary-grid div {
+      min-width: 0;
+      padding: .68rem;
+      border: 1px solid #4e574f;
+      border-radius: .45rem;
+      background: #222722;
+      color: #c0c7c1;
+      font-size: .68rem;
+      overflow-wrap: anywhere;
+    }
+    .arch-boundary-grid b {
+      display: block;
+      margin-bottom: .18rem;
+      color: white;
+      font-size: .56rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .arch-evidence {
+      margin: .7rem 0 0;
+      padding-left: .65rem;
+      border-left: 3px solid var(--lime);
+      color: #aeb7b0;
+      font-size: .68rem;
+    }
+    .arch-evidence b { color: white; }
+    .arch-proof {
+      min-width: 0;
+      padding: 1.1rem;
+      background: #171a17;
+    }
+    .arch-proof h3 {
+      margin: 0;
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.18rem;
+      font-weight: 500;
+    }
+    .arch-proof > p {
+      margin: .2rem 0 .8rem;
+      color: #939d95;
+      font-size: .65rem;
+    }
+    .arch-proof ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .arch-proof li {
+      display: grid;
+      grid-template-columns: 1.25rem minmax(0, 1fr);
+      gap: .45rem;
+      align-items: start;
+      padding: .56rem 0;
+      border-top: 1px solid #3e463f;
+    }
+    .arch-proof-glyph {
+      display: grid;
+      place-items: center;
+      color: #aab2ab;
+      font-size: .82rem;
+      font-weight: 900;
+    }
+    .arch-proof li[data-proof-state="passed"] .arch-proof-glyph,
+    .arch-proof li[data-proof-state="recorded"] .arch-proof-glyph { color: var(--lime); }
+    .arch-proof li[data-proof-state="rerouted"] .arch-proof-glyph,
+    .arch-proof li[data-proof-state="stopped"] .arch-proof-glyph,
+    .arch-proof li[data-proof-state="failed"] .arch-proof-glyph,
+    .arch-proof li[data-proof-state="deferred"] .arch-proof-glyph { color: var(--coral); }
+    .arch-proof-name {
+      display: block;
+      color: white;
+      font-size: .68rem;
+      font-weight: 800;
+    }
+    .arch-proof-value {
+      display: block;
+      color: #949e96;
+      font-size: .61rem;
+      line-height: 1.3;
+    }
+    .arch-claims {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+      padding: .9rem 1.1rem;
+      border-top: 1px solid #596159;
+      background: #292f29;
+    }
+    .arch-claims p {
+      margin: 0;
+      color: #afb7b0;
+      font-size: .66rem;
+    }
+    .arch-claims b { color: white; }
+    .arch-claims p:last-child { text-align: right; }
     .fallback {
       margin: 1rem 0 0;
       padding: .9rem 1rem;
@@ -489,17 +851,32 @@
       .job-board { max-width: 34rem; transform: rotate(.6deg); }
       .section-intro { grid-template-columns: 1fr; align-items: start; }
       .finding { grid-template-columns: 3.7rem minmax(0, .8fr) minmax(0, 1.2fr); }
-      .flow { grid-template-columns: 1fr; }
-      .step { min-height: 8.5rem; padding: 1rem 1rem 1rem 4.3rem; border-right: 0; border-bottom: 1px solid #596159; }
-      .step:last-child { border-bottom: 0; }
-      .step-number { position: absolute; left: 1rem; top: 1.1rem; margin: 0; }
-      .step:not(:last-child)::after {
-        content: "v";
+      .arch-layout { grid-template-columns: 1fr; }
+      .arch-stage { border-right: 0; border-bottom: 1px solid #596159; }
+      .arch-map { grid-template-columns: 1fr; grid-template-rows: none; gap: 1.7rem; }
+      .arch-node--graph,
+      .arch-node--policy,
+      .arch-node--router,
+      .arch-node--execution,
+      .arch-node--validator,
+      .arch-node--action,
+      .arch-node--receipt { grid-column: 1; grid-row: auto; }
+      .arch-node--graph::after,
+      .arch-node--policy::after,
+      .arch-node--router::after,
+      .arch-node--execution::after,
+      .arch-node--validator::after,
+      .arch-node--action::after {
+        content: "↓";
+        left: calc(50% - .65rem);
         right: auto;
-        left: 1.35rem;
         top: auto;
-        bottom: -.88rem;
+        bottom: -1.48rem;
       }
+      .arch-node--receipt::after,
+      .arch-return { display: none; }
+      .arch-node { min-height: 0; }
+      .arch-proof ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1rem; }
       .examples .section-intro { margin-bottom: 2rem; }
       .audiences { grid-template-columns: 1fr; }
       .audience { min-height: 17rem; }
@@ -522,12 +899,27 @@
       .boundary { grid-template-columns: 1fr; }
       .case-picker { display: grid; grid-template-columns: 1fr 1fr; }
       .case-picker button { width: 100%; }
+      .arch-toolbar,
+      .arch-detail-head,
+      .arch-boundary-grid,
+      .arch-claims { grid-template-columns: 1fr; }
+      .arch-stress { width: 100%; min-width: 0; }
+      .arch-stage,
+      .arch-proof { padding: .8rem; }
+      .arch-detail { padding: .8rem; }
+      .arch-result { justify-self: start; }
+      .arch-proof ol { grid-template-columns: 1fr; }
+      .arch-claims p:last-child { text-align: left; }
+      .arch-step-nav { grid-template-columns: 1fr 1fr; }
+      .arch-step-count { grid-column: 1 / -1; grid-row: 1; }
+      .arch-step-nav button { width: 100%; }
       footer .wrap { display: block; }
       footer span { display: block; margin-top: .35rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+      .arch-node { transition: none; }
     }
   </style>
 </head>
@@ -606,27 +998,132 @@
 
     <section class="section how" id="how">
       <div class="wrap">
-        <p class="section-label">How it works</p>
+        <p class="section-label">Interactive architecture</p>
         <div class="section-intro">
-          <h2>Every request crosses five gates.</h2>
-          <p>Choose an example to see the same control loop applied to different household realities. The household sets the rules once; the system handles model and device choice behind them.</p>
+          <h2>Watch intelligence move. Watch authority stay home.</h2>
+          <p>Choose a household task, advance the trace, or break the route. Models and devices may change; the context grant, quality floor, action boundary, and evidence duty cannot silently change with them.</p>
         </div>
 
         <div class="case-picker" role="group" aria-label="Choose a household example">
-          <button type="button" data-case="bill" aria-pressed="true">Bill increase</button>
-          <button type="button" data-case="homework" aria-pressed="false">Homework help</button>
-          <button type="button" data-case="appliance" aria-pressed="false">Appliance leak</button>
-          <button type="button" data-case="groceries" aria-pressed="false">Grocery plan</button>
+          <button type="button" data-arch-scenario="bill" aria-pressed="true">Bill increase</button>
+          <button type="button" data-arch-scenario="homework" aria-pressed="false">Homework help</button>
+          <button type="button" data-arch-scenario="appliance" aria-pressed="false">Appliance leak</button>
+          <button type="button" data-arch-scenario="groceries" aria-pressed="false">Grocery plan</button>
         </div>
 
-        <div class="flow" aria-live="polite" aria-label="Household request path">
-          <article class="step"><span class="step-number">01</span><small>Name the job</small><strong id="flow-request">Explain why our power bill jumped</strong></article>
-          <article class="step"><span class="step-number">02</span><small>Resolve household reality</small><strong id="flow-boundary">Account, tariff, prior statements, account owner</strong></article>
-          <article class="step"><span class="step-number">03</span><small>Enforce authority</small><strong id="flow-match">Read-only; adult requester; no payment authority</strong></article>
-          <article class="step"><span class="step-number">04</span><small>Run and verify</small><strong id="flow-check">Compare evidence; validate every citation</strong></article>
-          <article class="step"><span class="step-number">05</span><small>Act or stop</small><strong id="flow-outcome">Explain or draft; record evidence; ask before action</strong></article>
+        <div class="arch-explorer" id="architecture-explorer">
+          <p class="visually-hidden" id="arch-static-summary">This deterministic reference-architecture explainer shows how a household request moves through seven components. Use the household examples, stress-route selector, Previous gate and Next gate controls. Node buttons jump to the gate where each component becomes relevant.</p>
+
+          <header class="arch-toolbar">
+            <div>
+              <p class="arch-kicker">The sovereignty trace</p>
+              <p class="arch-request"><span>Request envelope</span><strong id="arch-request">Explain why our power bill rose 34%</strong></p>
+            </div>
+            <div class="arch-stress">
+              <label for="arch-condition">Stress the route</label>
+              <select id="arch-condition">
+                <option value="normal">Standard route</option>
+                <option value="capability-offline">Active capability unavailable</option>
+                <option value="unauthorized">Unauthorized requester</option>
+                <option value="validation-failure">Validation failure</option>
+                <option value="approval-timeout">Human approval timeout</option>
+              </select>
+            </div>
+          </header>
+
+          <div class="arch-layout">
+            <div class="arch-stage">
+              <div class="arch-map" role="group" aria-label="Interactive household intelligence architecture" aria-describedby="arch-static-summary">
+                <button class="arch-node arch-node--graph" type="button" data-arch-node="graph" data-phase="2" data-state="complete">
+                  <span class="arch-node-plane">Household reality</span>
+                  <strong>Operating graph</strong>
+                  <span class="arch-node-detail" id="arch-node-graph-detail">Minimum context is scoped</span>
+                  <span class="arch-node-state" id="arch-node-graph-state">Passed</span>
+                </button>
+                <button class="arch-node arch-node--policy" type="button" data-arch-node="policy" data-phase="3" data-state="complete">
+                  <span class="arch-node-plane">Assurance plane</span>
+                  <strong>Identity + policy</strong>
+                  <span class="arch-node-detail" id="arch-node-policy-detail">Authority is bound first</span>
+                  <span class="arch-node-state" id="arch-node-policy-state">Passed</span>
+                </button>
+                <button class="arch-node arch-node--router" type="button" data-arch-node="router" data-phase="4" data-state="active">
+                  <span class="arch-node-plane">Control plane</span>
+                  <strong>Capability router</strong>
+                  <span class="arch-node-detail" id="arch-node-router-detail">Primary route admitted</span>
+                  <span class="arch-node-state" id="arch-node-router-state">Active</span>
+                </button>
+                <button class="arch-node arch-node--execution" type="button" data-arch-node="execution" data-phase="4" data-state="active">
+                  <span class="arch-node-plane">Execution plane</span>
+                  <strong>Execution target</strong>
+                  <span class="arch-node-detail" id="arch-node-execution-detail">Home-hub bill specialist</span>
+                  <span class="arch-node-state" id="arch-node-execution-state">Active</span>
+                </button>
+                <button class="arch-node arch-node--validator" type="button" data-arch-node="validator" data-phase="5" data-state="pending">
+                  <span class="arch-node-plane">Assurance plane</span>
+                  <strong>Outcome validator</strong>
+                  <span class="arch-node-detail" id="arch-node-validator-detail">Arithmetic + source trace</span>
+                  <span class="arch-node-state" id="arch-node-validator-state">Pending</span>
+                </button>
+                <button class="arch-node arch-node--action" type="button" data-arch-node="action" data-phase="6" data-state="pending">
+                  <span class="arch-node-plane">Control plane</span>
+                  <strong>Typed action gate</strong>
+                  <span class="arch-node-detail" id="arch-node-action-detail">Explain or draft; never pay</span>
+                  <span class="arch-node-state" id="arch-node-action-state">Pending</span>
+                </button>
+                <button class="arch-node arch-node--receipt" type="button" data-arch-node="receipt" data-phase="6" data-state="pending">
+                  <span class="arch-node-plane">Evidence plane</span>
+                  <strong>Evidence receipt</strong>
+                  <span class="arch-node-detail" id="arch-node-receipt-detail">Policy · route · validation · outcome</span>
+                  <span class="arch-node-state" id="arch-node-receipt-state">Pending</span>
+                </button>
+                <span class="arch-return" aria-hidden="true">Evidence returns<br>to household control</span>
+              </div>
+
+              <div class="arch-step-nav" aria-label="Architecture trace controls">
+                <button type="button" id="arch-prev">← Previous gate</button>
+                <span class="arch-step-count" id="arch-step-count">Step 4 of 6 · Route</span>
+                <button type="button" id="arch-next">Next gate →</button>
+              </div>
+
+              <section class="arch-detail" aria-labelledby="arch-step-title">
+                <div class="arch-detail-head">
+                  <div>
+                    <p class="arch-step-kicker" id="arch-step-kicker">Gate 04 · Route</p>
+                    <h3 id="arch-step-title">Admit a capability, then reserve the route</h3>
+                    <p class="arch-step-status" id="arch-step-status" role="status" aria-live="polite">The primary specialist is eligible only after the policy and quality floor are fixed.</p>
+                  </div>
+                  <span class="arch-result" id="arch-result" data-result="passed">Route admitted</span>
+                </div>
+                <div class="arch-boundary-grid">
+                  <div><b>Authorized payload</b><span id="arch-authorized">Tariff and 12-month usage cross to the selected capability.</span></div>
+                  <div><b>Withheld by household</b><span id="arch-withheld">Identity and payment token stay home.</span></div>
+                </div>
+                <p class="arch-evidence"><b>Evidence emitted:</b> <span id="arch-evidence">route reason, capability version, context grant, and resource lease.</span></p>
+              </section>
+            </div>
+
+            <aside class="arch-proof" aria-labelledby="arch-proof-title">
+              <h3 id="arch-proof-title">Proof rail</h3>
+              <p>What must be true before the household accepts the outcome.</p>
+              <ol>
+                <li data-proof="identity" data-proof-state="passed"><span class="arch-proof-glyph">✓</span><span><span class="arch-proof-name">Identity</span><span class="arch-proof-value">verified</span></span></li>
+                <li data-proof="scope" data-proof-state="passed"><span class="arch-proof-glyph">✓</span><span><span class="arch-proof-name">Scope</span><span class="arch-proof-value">minimum grant</span></span></li>
+                <li data-proof="policy" data-proof-state="passed"><span class="arch-proof-glyph">✓</span><span><span class="arch-proof-name">Policy</span><span class="arch-proof-value">authority bound</span></span></li>
+                <li data-proof="route" data-proof-state="passed"><span class="arch-proof-glyph">✓</span><span><span class="arch-proof-name">Route</span><span class="arch-proof-value">admitted</span></span></li>
+                <li data-proof="validation" data-proof-state="pending"><span class="arch-proof-glyph">○</span><span><span class="arch-proof-name">Validation</span><span class="arch-proof-value">pending</span></span></li>
+                <li data-proof="action" data-proof-state="pending"><span class="arch-proof-glyph">○</span><span><span class="arch-proof-name">Action</span><span class="arch-proof-value">pending</span></span></li>
+                <li data-proof="receipt" data-proof-state="pending"><span class="arch-proof-glyph">○</span><span><span class="arch-proof-name">Receipt</span><span class="arch-proof-value">pending</span></span></li>
+              </ol>
+            </aside>
+          </div>
+
+          <div class="arch-claims">
+            <p><b>Design invariant:</b> policy before placement; every terminal outcome leaves a receipt.</p>
+            <p><b>Still to prove:</b> whether this beats simpler baselines on outcomes and full cost.</p>
+          </div>
+          <p class="visually-hidden" id="arch-transcript"></p>
         </div>
-        <p class="fallback"><b>The substitution rule:</b> another model, device, provider, or person may take over only under the same context, quality, and authority limits. The supplier can change. The household policy cannot silently change with it.</p>
+        <p class="fallback"><b>The substitution rule:</b> another model, device, provider, or person may take over only under the same context, quality, and authority limits. This is a deterministic architecture explainer, not measured system performance.</p>
       </div>
     </section>
 
@@ -714,56 +1211,415 @@
   </footer>
 
   <script>
-    const scenarios = {
+    const architectureScenarios = {
       bill: {
-        request: "Explain why our power bill jumped",
-        boundary: "Account, tariff, prior statements, account owner",
-        match: "Read-only; adult requester; no payment authority",
-        check: "Compare evidence; validate every citation",
-        outcome: "Explain or draft; record evidence; ask before action"
+        request: "Explain why our power bill rose 34%",
+        actor: "Adult · account viewer",
+        context: "tariff, meter totals, 12-month usage, and account-owner role",
+        contextShort: "Tariff + usage + role",
+        withheld: "Payment token, unrelated accounts, and occupant identities.",
+        allowed: "Explain, compare, and draft a question.",
+        denied: "Pay, cancel service, or close the account.",
+        primary: "Home-hub bill specialist",
+        fallback: "Approved remote bill specialist",
+        quality: "Arithmetic check + source trace",
+        validation: "Recalculate deltas, resolve citations, and abstain below the quality floor.",
+        action: "Release the explanation and draft; create no side effect.",
+        boundary: "Tariff and 12-month usage cross under a minimized grant.",
+        retained: "Identity and payment token stay home.",
+        unauthorized: "A guest requests private utility records.",
+        invalid: "The output makes an uncited rate-change claim.",
+        approval: "Sending the dispute message requires a human."
       },
       homework: {
         request: "Help me understand this fraction problem",
-        boundary: "Child, assignment, guardian rules, approved school context",
-        match: "Teaching only; no assessed-work completion",
-        check: "Run an age-fit tutor; verify the next step",
-        outcome: "Check understanding, abstain, or ask a guardian"
+        actor: "Child · learner",
+        context: "assignment excerpt, grade band, and guardian teaching rules",
+        contextShort: "Assignment + teaching rules",
+        withheld: "School credentials, broader learner profile, and the answer key.",
+        allowed: "Explain, hint, quiz, and check understanding.",
+        denied: "Submit, impersonate, or complete assessed work.",
+        primary: "Tablet micro-tutor",
+        fallback: "Home-broker tutor",
+        quality: "Age-fit + hint-only behavior",
+        validation: "Check age fit, teaching policy, and that no graded answer was completed.",
+        action: "Release a hint and comprehension check; never submit the work.",
+        boundary: "No task context leaves the household.",
+        retained: "Child identity and school credentials stay local.",
+        unauthorized: "A guest requests the learner's school history.",
+        invalid: "The output completes the graded answer.",
+        approval: "Sharing a progress note requires a guardian."
       },
       appliance: {
         request: "Find out why the dishwasher is leaking",
-        boundary: "Exact model, warranty, service history, manual",
-        match: "Low-risk diagnostics only; no hazardous work",
-        check: "Run a manual specialist; verify every step",
-        outcome: "Guide safely, stop for service, and log the evidence"
+        actor: "Adult · device owner",
+        context: "model, signed manual, warranty, and reported symptom",
+        contextShort: "Model + manual + symptom",
+        withheld: "Ambient camera or audio and the full appliance inventory.",
+        allowed: "Observe, use the manual, shut off water, or contact service.",
+        denied: "Remove panels or perform live electrical work.",
+        primary: "Local manual specialist",
+        fallback: "Human or approved service handoff",
+        quality: "Manual citation + hazard check",
+        validation: "Resolve each instruction to the signed manual and pass the hazard check.",
+        action: "Guide a low-risk check or stop and recommend service.",
+        boundary: "Model and symptom reach service only after consent.",
+        retained: "Ambient household data stays home.",
+        unauthorized: "An untrusted display requests the warranty record.",
+        invalid: "The proposed step is unsupported by the manual.",
+        approval: "Booking a service visit requires a human."
       },
       groceries: {
         request: "Plan dinners and update the grocery list",
-        boundary: "Shared inventory, lists, allergies, and preferences",
-        match: "Shared-list update allowed; checkout requires approval",
-        check: "Run a planner; verify stock and substitutions",
-        outcome: "Suggest, update the list, and ask before ordering"
+        actor: "Adult · shared-list editor",
+        context: "shared inventory, allergies, budget band, and shared preferences",
+        contextShort: "Inventory + allergies + budget",
+        withheld: "Private health notes, named profiles, and payment token.",
+        allowed: "Suggest meals, substitutions, and update the shared list.",
+        denied: "Purchase or merge private profiles without approval.",
+        primary: "Home-hub meal planner",
+        fallback: "Compact phone planner",
+        quality: "Allergen + stock + quantity checks",
+        validation: "Verify allergens, current stock, quantities, and substitution constraints.",
+        action: "Release the plan and update the shared list; never check out.",
+        boundary: "Ingredient gaps and household constraints cross.",
+        retained: "Identity, private health notes, and payment token stay home.",
+        unauthorized: "A guest requests a private dietary note.",
+        invalid: "The plan violates an allergy constraint.",
+        approval: "Placing the grocery order requires a human."
       }
     };
 
-    const fields = {
-      request: document.getElementById("flow-request"),
-      boundary: document.getElementById("flow-boundary"),
-      match: document.getElementById("flow-match"),
-      check: document.getElementById("flow-check"),
-      outcome: document.getElementById("flow-outcome")
+    const architectureConditions = {
+      normal: { maxStep: 6, focusStep: 4 },
+      "capability-offline": { maxStep: 6, focusStep: 4 },
+      unauthorized: { maxStep: 3, focusStep: 3 },
+      "validation-failure": { maxStep: 5, focusStep: 5 },
+      "approval-timeout": { maxStep: 6, focusStep: 6 }
     };
 
-    document.querySelectorAll("[data-case]").forEach((button) => {
+    const architectureSteps = ["Task", "Context", "Policy", "Route", "Verify", "Act + prove"];
+    const architectureNodePhases = {
+      graph: 2,
+      policy: 3,
+      router: 4,
+      execution: 4,
+      validator: 5,
+      action: 6,
+      receipt: 6
+    };
+    const architectureNodeStateLabels = {
+      pending: "Pending",
+      active: "Active",
+      complete: "Passed",
+      rerouted: "Rerouted",
+      blocked: "Stopped",
+      skipped: "Not reached",
+      recorded: "Recorded"
+    };
+    const proofDefaults = {
+      identity: { threshold: 1, value: "verified" },
+      scope: { threshold: 2, value: "minimum grant" },
+      policy: { threshold: 3, value: "authority bound" },
+      route: { threshold: 4, value: "admitted" },
+      validation: { threshold: 5, value: "passed" },
+      action: { threshold: 6, value: "bounded" },
+      receipt: { threshold: 6, value: "recorded" }
+    };
+
+    const architectureElements = {
+      request: document.getElementById("arch-request"),
+      condition: document.getElementById("arch-condition"),
+      prev: document.getElementById("arch-prev"),
+      next: document.getElementById("arch-next"),
+      stepCount: document.getElementById("arch-step-count"),
+      stepKicker: document.getElementById("arch-step-kicker"),
+      stepTitle: document.getElementById("arch-step-title"),
+      stepStatus: document.getElementById("arch-step-status"),
+      result: document.getElementById("arch-result"),
+      authorized: document.getElementById("arch-authorized"),
+      withheld: document.getElementById("arch-withheld"),
+      evidence: document.getElementById("arch-evidence"),
+      transcript: document.getElementById("arch-transcript")
+    };
+
+    let activeArchitectureScenario = "bill";
+    let activeArchitectureCondition = "normal";
+    let activeArchitectureStep = 4;
+
+    function architectureStepDetail(scenario, condition, step) {
+      if (step === 1) {
+        return {
+          title: "Classify the job before choosing intelligence",
+          status: `${scenario.actor} asks the household for a bounded outcome. No model, provider, or device has been selected.`,
+          result: "Task classified",
+          resultState: "passed",
+          authorized: "Task text, requester role, purpose, deadline, and requested authority.",
+          withheld: "All household context remains unavailable until the scope is resolved.",
+          evidence: "task family, requester role, purpose, deadline, and requested authority."
+        };
+      }
+      if (step === 2) {
+        const isUnauthorized = condition === "unauthorized";
+        return {
+          title: "Resolve the minimum context",
+          status: isUnauthorized
+            ? "Potential sources are identified, but their values remain withheld until the requester passes policy."
+            : "The operating graph resolves only the people, objects, records, and permissions needed for this task.",
+          result: isUnauthorized ? "Values withheld" : "Context scoped",
+          resultState: isUnauthorized ? "stopped" : "passed",
+          authorized: isUnauthorized ? "Identity and task purpose only; no household record values." : scenario.context,
+          withheld: scenario.withheld,
+          evidence: "source, owner, freshness, sensitivity, and the exact context scope requested."
+        };
+      }
+      if (step === 3) {
+        const isDenied = condition === "unauthorized";
+        return {
+          title: "Bind authority before routing",
+          status: isDenied
+            ? `${scenario.unauthorized} Policy denies the request before a context grant or execution route exists.`
+            : "Allowed, approval-gated, and prohibited outcomes are fixed before the router can optimize placement.",
+          result: isDenied ? "Denied before dispatch" : "Policy bound",
+          resultState: isDenied ? "stopped" : "passed",
+          authorized: isDenied ? "No household context or execution grant." : scenario.allowed,
+          withheld: isDenied ? `Request stopped. Protected context: ${scenario.withheld}` : scenario.denied,
+          evidence: isDenied
+            ? "requester identity, policy version, denial reason, and proof that no context grant was issued."
+            : "identity decision, policy version, permitted actions, approval gates, and prohibited actions."
+        };
+      }
+      if (step === 4) {
+        const isRerouted = condition === "capability-offline";
+        return {
+          title: "Admit a capability, then reserve the route",
+          status: isRerouted
+            ? `${scenario.primary} is unavailable. ${scenario.fallback} may substitute only under the identical context grant and quality floor.`
+            : `${scenario.primary} is eligible only after policy, competence, runtime, and resource checks pass.`,
+          result: isRerouted ? "Fallback admitted" : "Route admitted",
+          resultState: isRerouted ? "rerouted" : "passed",
+          authorized: scenario.boundary,
+          withheld: scenario.retained,
+          evidence: isRerouted
+            ? "failure reason, rejected route, fallback reason, unchanged grant, capability version, and lease."
+            : "route reason, capability version, context grant, compatibility checks, and resource lease."
+        };
+      }
+      if (step === 5) {
+        const isInvalid = condition === "validation-failure";
+        return {
+          title: "Verify the outcome, not the fluency",
+          status: isInvalid
+            ? `${scenario.invalid} The validator quarantines it before the action gate.`
+            : scenario.validation,
+          result: isInvalid ? "Output quarantined" : "Outcome verified",
+          resultState: isInvalid ? "failed" : "passed",
+          authorized: `Candidate output plus validation evidence. Quality floor: ${scenario.quality}.`,
+          withheld: isInvalid
+            ? "The failed output cannot reach the action gate or the household-facing result."
+            : "Unverified claims and out-of-scope instructions cannot pass.",
+          evidence: isInvalid
+            ? "failed check, candidate hash, model version, quarantine decision, and safe terminal outcome."
+            : "validator versions, quality-floor measurements, provenance checks, and acceptance decision."
+        };
+      }
+      const isDeferred = condition === "approval-timeout";
+      return {
+        title: "Execute only the typed action, then prove it",
+        status: isDeferred
+          ? `${scenario.approval} Approval expires, so the system defers without creating a side effect.`
+          : scenario.action,
+        result: isDeferred ? "Deferred without side effect" : "Bounded outcome released",
+        resultState: isDeferred ? "deferred" : "passed",
+        authorized: isDeferred ? "A reviewable proposal remains available; no action token is issued." : scenario.action,
+        withheld: isDeferred ? "All side-effect authority remains withheld after the timeout." : scenario.denied,
+        evidence: isDeferred
+          ? "approval request, expiry, absence of action token, no-side-effect postcondition, and deferral."
+          : "policy, route, versions, validation, action token if any, postcondition, outcome, and undo path."
+      };
+    }
+
+    function architectureNodeState(nodeName) {
+      const phase = architectureNodePhases[nodeName];
+      const condition = activeArchitectureCondition;
+      const terminalReached = activeArchitectureStep >= architectureConditions[condition].maxStep;
+
+      if (nodeName === "receipt") {
+        return terminalReached ? "recorded" : "pending";
+      }
+      if (condition === "unauthorized" && terminalReached) {
+        if (nodeName === "policy") return "blocked";
+        if (["router", "execution", "validator", "action"].includes(nodeName)) return "skipped";
+      }
+      if (condition === "validation-failure" && terminalReached) {
+        if (nodeName === "validator") return "blocked";
+        if (nodeName === "action") return "skipped";
+      }
+      if (condition === "approval-timeout" && terminalReached && nodeName === "action") {
+        return "blocked";
+      }
+      if (condition === "capability-offline" && activeArchitectureStep >= 4 && ["router", "execution"].includes(nodeName)) {
+        return "rerouted";
+      }
+      if (phase < activeArchitectureStep) return "complete";
+      if (phase === activeArchitectureStep) return "active";
+      return "pending";
+    }
+
+    function updateArchitectureNodeDetails(scenario) {
+      const condition = activeArchitectureCondition;
+      const terminalReached = activeArchitectureStep >= architectureConditions[condition].maxStep;
+      const detailText = {
+        graph: condition === "unauthorized" ? "Sources mapped; values withheld" : `Minimum context: ${scenario.contextShort}`,
+        policy: condition === "unauthorized" && terminalReached ? "Requester denied before grant" : "Allowed + prohibited actions bound",
+        router: condition === "capability-offline" && activeArchitectureStep >= 4 ? "Fallback under the same grant" : "Primary capability admitted",
+        execution: condition === "capability-offline" && activeArchitectureStep >= 4 ? scenario.fallback : scenario.primary,
+        validator: condition === "validation-failure" && terminalReached ? "Failed output quarantined" : scenario.quality,
+        action: condition === "approval-timeout" && terminalReached ? "No side effect; review deferred" : scenario.action,
+        receipt: "Policy · route · validation · outcome"
+      };
+
+      if (condition === "unauthorized" && terminalReached) {
+        detailText.router = "No route created";
+        detailText.execution = "No dispatch";
+        detailText.validator = "No output to validate";
+        detailText.action = "No action token";
+      }
+      if (condition === "validation-failure" && terminalReached) {
+        detailText.action = "No action token";
+      }
+
+      Object.entries(detailText).forEach(([name, text]) => {
+        document.getElementById(`arch-node-${name}-detail`).textContent = text;
+      });
+    }
+
+    function renderArchitectureNodes(scenario) {
+      updateArchitectureNodeDetails(scenario);
+      document.querySelectorAll("[data-arch-node]").forEach((node) => {
+        const name = node.dataset.archNode;
+        const state = architectureNodeState(name);
+        let label = architectureNodeStateLabels[state];
+        if (state === "blocked" && name === "validator") label = "Failed";
+        if (state === "blocked" && name === "action") label = "Deferred";
+        node.dataset.state = state;
+        document.getElementById(`arch-node-${name}-state`).textContent = label;
+        const title = node.querySelector("strong").textContent;
+        const detail = document.getElementById(`arch-node-${name}-detail`).textContent;
+        node.setAttribute("aria-label", `${title}. ${label}. ${detail}. Jump to gate ${Math.min(Number(node.dataset.phase), architectureConditions[activeArchitectureCondition].maxStep)}.`);
+      });
+    }
+
+    function defaultProofState() {
+      const result = {};
+      Object.entries(proofDefaults).forEach(([name, definition]) => {
+        result[name] = activeArchitectureStep >= definition.threshold
+          ? { state: "passed", glyph: "✓", value: definition.value }
+          : { state: "pending", glyph: "○", value: "pending" };
+      });
+      return result;
+    }
+
+    function renderArchitectureProof() {
+      const proof = defaultProofState();
+      const condition = activeArchitectureCondition;
+      const terminalReached = activeArchitectureStep >= architectureConditions[condition].maxStep;
+
+      if (condition === "capability-offline" && activeArchitectureStep >= 4) {
+        proof.route = { state: "rerouted", glyph: "↺", value: "rerouted; same grant" };
+      }
+      if (condition === "unauthorized" && terminalReached) {
+        proof.identity = { state: "passed", glyph: "✓", value: "guest identified" };
+        proof.scope = { state: "stopped", glyph: "⊘", value: "withheld" };
+        proof.policy = { state: "stopped", glyph: "×", value: "request stopped" };
+        proof.route = { state: "not-reached", glyph: "—", value: "not reached" };
+        proof.validation = { state: "not-reached", glyph: "—", value: "not reached" };
+        proof.action = { state: "not-reached", glyph: "—", value: "not reached" };
+        proof.receipt = { state: "recorded", glyph: "✓", value: "denial recorded" };
+      }
+      if (condition === "validation-failure" && terminalReached) {
+        proof.validation = { state: "failed", glyph: "×", value: "failed; quarantined" };
+        proof.action = { state: "not-reached", glyph: "—", value: "not reached" };
+        proof.receipt = { state: "recorded", glyph: "✓", value: "failure recorded" };
+      }
+      if (condition === "approval-timeout" && terminalReached) {
+        proof.action = { state: "deferred", glyph: "⌛", value: "deferred; no side effect" };
+        proof.receipt = { state: "recorded", glyph: "✓", value: "timeout recorded" };
+      }
+
+      Object.entries(proof).forEach(([name, item]) => {
+        const row = document.querySelector(`[data-proof="${name}"]`);
+        row.dataset.proofState = item.state;
+        row.querySelector(".arch-proof-glyph").textContent = item.glyph;
+        row.querySelector(".arch-proof-value").textContent = item.value;
+      });
+    }
+
+    function renderArchitecture() {
+      const scenario = architectureScenarios[activeArchitectureScenario];
+      const maxStep = architectureConditions[activeArchitectureCondition].maxStep;
+      activeArchitectureStep = Math.max(1, Math.min(activeArchitectureStep, maxStep));
+      const detail = architectureStepDetail(scenario, activeArchitectureCondition, activeArchitectureStep);
+
+      architectureElements.request.textContent = scenario.request;
+      architectureElements.stepCount.textContent = `Step ${activeArchitectureStep} of ${maxStep} · ${architectureSteps[activeArchitectureStep - 1]}`;
+      architectureElements.stepKicker.textContent = `Gate ${String(activeArchitectureStep).padStart(2, "0")} · ${architectureSteps[activeArchitectureStep - 1]}`;
+      architectureElements.stepTitle.textContent = detail.title;
+      architectureElements.stepStatus.textContent = detail.status;
+      architectureElements.result.textContent = detail.result;
+      architectureElements.result.dataset.result = detail.resultState;
+      architectureElements.authorized.textContent = detail.authorized;
+      architectureElements.withheld.textContent = detail.withheld;
+      architectureElements.evidence.textContent = detail.evidence;
+      architectureElements.prev.disabled = activeArchitectureStep === 1;
+      architectureElements.next.disabled = activeArchitectureStep === maxStep;
+
+      renderArchitectureNodes(scenario);
+      renderArchitectureProof();
+
+      const nodeSummary = Array.from(document.querySelectorAll("[data-arch-node]"))
+        .map((node) => `${node.querySelector("strong").textContent}: ${node.querySelector(".arch-node-state").textContent}`)
+        .join("; ");
+      const proofSummary = Array.from(document.querySelectorAll("[data-proof]"))
+        .map((row) => `${row.querySelector(".arch-proof-name").textContent}: ${row.querySelector(".arch-proof-value").textContent}`)
+        .join("; ");
+      architectureElements.transcript.textContent = `${scenario.request}. ${architectureElements.stepCount.textContent}. ${detail.status} Architecture: ${nodeSummary}. Proof: ${proofSummary}.`;
+    }
+
+    document.querySelectorAll("[data-arch-scenario]").forEach((button) => {
       button.addEventListener("click", () => {
-        const scenario = scenarios[button.dataset.case];
-        document.querySelectorAll("[data-case]").forEach((item) => {
+        activeArchitectureScenario = button.dataset.archScenario;
+        document.querySelectorAll("[data-arch-scenario]").forEach((item) => {
           item.setAttribute("aria-pressed", String(item === button));
         });
-        Object.entries(fields).forEach(([key, node]) => {
-          node.textContent = scenario[key];
-        });
+        renderArchitecture();
       });
     });
+
+    architectureElements.condition.addEventListener("change", () => {
+      activeArchitectureCondition = architectureElements.condition.value;
+      activeArchitectureStep = architectureConditions[activeArchitectureCondition].focusStep;
+      renderArchitecture();
+    });
+
+    architectureElements.prev.addEventListener("click", () => {
+      activeArchitectureStep -= 1;
+      renderArchitecture();
+    });
+
+    architectureElements.next.addEventListener("click", () => {
+      activeArchitectureStep += 1;
+      renderArchitecture();
+    });
+
+    document.querySelectorAll("[data-arch-node]").forEach((node) => {
+      node.addEventListener("click", () => {
+        activeArchitectureStep = Math.min(Number(node.dataset.phase), architectureConditions[activeArchitectureCondition].maxStep);
+        renderArchitecture();
+      });
+    });
+
+    renderArchitecture();
   </script>
 </body>
 </html>
