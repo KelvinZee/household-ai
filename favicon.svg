@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Household AI">
+  <rect width="16" height="16" fill="#f2eee4"/>
+  <circle cx="10" cy="9.5" r="4.6" fill="#ff6848"/>
+  <circle cx="6.3" cy="6.3" r="4.8" fill="#d9ff67" stroke="#151815" stroke-width="1.1"/>
+</svg>
