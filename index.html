@@ -320,6 +320,107 @@
       font-size: .82rem;
     }
 
+    .tested { background: var(--panel); border-top: 1px solid var(--line); }
+    .tested-claims {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: 1rem;
+      margin: 0 0 2.4rem;
+    }
+    .claim {
+      padding: 1.15rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: var(--paper);
+    }
+    .claim b {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums;
+    }
+    .claim span { display: block; margin-top: .3rem; color: var(--muted); font-size: .83rem; }
+
+    .result {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(16rem, .9fr);
+      gap: clamp(1.4rem, 4vw, 3rem);
+      align-items: center;
+      padding: clamp(1.4rem, 3vw, 2.1rem);
+      border-radius: .8rem;
+      background: var(--ink);
+      color: #f8f5eb;
+    }
+    .result h3 {
+      margin: 0;
+      max-width: 22ch;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+      letter-spacing: -.035em;
+      line-height: 1.05;
+    }
+    .result p { margin: .75rem 0 0; color: #ccd2cb; font-size: .87rem; }
+    .scoreboard { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+    .score {
+      padding: .8rem .9rem;
+      border: 1px solid #464c46;
+      border-radius: .5rem;
+    }
+    .score b {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      font-variant-numeric: tabular-nums;
+    }
+    .score span {
+      display: block;
+      margin-top: .2rem;
+      font-size: .64rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #a5ada5;
+    }
+    .score.good { border-color: var(--lime); }
+    .score.good b { color: var(--lime); }
+    .score.bad { background: var(--coral); border-color: var(--coral); }
+    .score.bad b, .score.bad span { color: #2d0c04; }
+
+    .enforced {
+      margin: 2.4rem 0 0;
+      padding: 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: .8rem;
+      background: var(--paper);
+    }
+    .enforced h3 { margin: 0 0 .3rem; font-size: 1rem; font-weight: 850; }
+    .enforced > p { margin: 0 0 1.2rem; color: var(--muted); font-size: .87rem; max-width: 62ch; }
+    .stop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.1rem; }
+    .stop b { display: block; margin-bottom: .35rem; color: var(--green); font-size: .79rem; }
+    .stop ul { margin: 0; padding-left: 1.05rem; color: var(--muted); font-size: .83rem; }
+    .stop li { margin: .2rem 0; }
+    .stop code {
+      padding: .08rem .3rem;
+      border-radius: .25rem;
+      background: var(--soft-green);
+      color: var(--green);
+      font-size: .93em;
+    }
+
+    .tested-note {
+      margin: 2rem 0 0;
+      padding: .95rem 1.1rem;
+      border-left: 3px solid var(--coral);
+      background: var(--paper);
+      color: var(--muted);
+      font-size: .82rem;
+      max-width: 70ch;
+    }
+    .tested-note b { color: var(--ink); }
+
     .how {
       background: var(--ink);
       color: #f8f5eb;
@@ -898,6 +999,7 @@
       .clock-row { grid-template-columns: 8rem 1fr; gap: .5rem 1rem; }
       .clock-state { grid-column: 2; justify-self: start; }
       .clock-what, .clock-maps { grid-column: 2; }
+      .result { grid-template-columns: 1fr; }
       .arch-layout { grid-template-columns: 1fr; }
       .arch-stage { border-right: 0; border-bottom: 1px solid #596159; }
       .arch-map { grid-template-columns: 1fr; grid-template-rows: none; gap: 1.7rem; }
@@ -932,6 +1034,10 @@
     }
 
     @media (max-width: 640px) {
+      .scoreboard { grid-template-columns: 1fr 1fr; }
+      .paper-link { white-space: normal; text-align: center; }
+      .claim b { font-size: 1.4rem; }
+
       .wrap { width: min(calc(100% - 1.25rem), var(--max)); }
       .topbar .wrap { min-height: 3.7rem; }
       .nav a { display: none; }
@@ -981,6 +1087,7 @@
         <a href="#clock">In force</a>
         <a href="#how">Control loop</a>
         <a href="#examples">Examples</a>
+        <a href="#tested">Measured</a>
         <a href="#implications">Implications</a>
       </nav>
     </div>
@@ -1268,6 +1375,71 @@
       </div>
     </section>
 
+    <section class="section tested" id="tested">
+      <div class="wrap">
+        <p class="section-label">What happened when we ran it</p>
+        <div class="section-intro">
+          <h2>We built the first one, then tried to break it.</h2>
+          <p>Catching a bill increase is no longer a description on this page. It is a machine-readable contract, three reference capabilities, and a scorer that swaps the implementation underneath and counts what survives the swap. It is the first measured number in four versions of this work.</p>
+        </div>
+
+        <div class="tested-claims">
+          <div class="claim"><b>9 of 12</b><span>Conformance gates that need no model at all. They read the contract &mdash; authority ceiling, context scope, receipt shape, whether every state can still reach an ending. Policy is checkable before placement, which is what this argument predicts.</span></div>
+          <div class="claim"><b>10</b><span>Deliberately invalid contracts, each naming the gate it must break. The runner fails if any of them passes. A suite that only ever goes green proves nothing.</span></div>
+          <div class="claim"><b>37 &times; 20</b><span>Authored scenarios, run across twenty ordered substitutions &mdash; both directions of every swap, because stability is not symmetric.</span></div>
+        </div>
+
+        <div class="result">
+          <div>
+            <h3>A better implementation that should not ship.</h3>
+            <p>One binding follows a merchant through a rename, which the careful one cannot do. At the job itself it is plainly better. Substituted in, it also stops telling the household when the task crosses to a remote service &mdash; and the headline score barely moves. The worst component does.</p>
+            <p>Swapping the supplier is the easy half. This is the half that does not come free.</p>
+          </div>
+          <div class="scoreboard">
+            <div class="score good"><b>0.955</b><span>Better at the task</span></div>
+            <div class="score"><b>0.809</b><span>The one it replaces</span></div>
+            <div class="score"><b>0.947</b><span>Aggregate, looks fine</span></div>
+            <div class="score bad"><b>0.859</b><span>Worst component</span></div>
+          </div>
+        </div>
+
+        <div class="enforced">
+          <h3>The hard stop, enforced rather than described.</h3>
+          <p>Further up this page, that capability&rsquo;s stopping point is a sentence. In the contract it is a ceiling and a list &mdash; and something has to actually try to cross it, or the check has never run.</p>
+          <div class="stop-grid">
+            <div class="stop">
+              <b>What the contract fixes</b>
+              <ul>
+                <li>Authority capped at <code>draft</code> &mdash; nothing above it may be attempted at all</li>
+                <li>Make an autonomous payment</li>
+                <li>Cancel or close an account without approval</li>
+                <li>Move money between accounts</li>
+                <li>Change a tariff or contract term</li>
+              </ul>
+            </div>
+            <div class="stop">
+              <b>What tries to cross it</b>
+              <ul>
+                <li>A binding that reads an autopay flag as standing permission</li>
+                <li>&hellip; and an instruction typed into a statement memo</li>
+                <li>Caught by the ceiling and by the named list, separately</li>
+              </ul>
+            </div>
+            <div class="stop">
+              <b>What must not trip it</b>
+              <ul>
+                <li>A merchant legitimately named <code>QuickPay Services</code></li>
+                <li>A payment-shaped name is not an instruction</li>
+                <li>A check that fires on everything has caught nothing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p class="tested-note"><b>What this does not earn.</b> These are deterministic implementations, not models. It measures whether the contract is specific enough to catch a regression &mdash; not what happens when one model is swapped for another. The scenarios are authored fixtures, not field data. The stakes weighting is chosen, not derived. Three of the twelve gates still need a running model and report as not evaluated. The judgment on this work is unchanged: <b>useful synthesis, not novel.</b> <a href="./esums/">Read the full report, and the command that reproduces it &rarr;</a></p>
+      </div>
+    </section>
+
     <section class="section implications" id="implications">
       <div class="wrap">
         <p class="section-label">Who should care</p>
@@ -1303,10 +1475,10 @@
         <div>
           <p class="section-label">Optional depth</p>
           <h2>Want the evidence and architecture?</h2>
-          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests. The second edition, September 2026, adds what is now in force, narrows the substitution claim, and expands the sources from twenty to thirty-two.</p>
-          <p>A versioned technical archive sits behind the brief &mdash; the full capability contract, the conformance program, the architecture plates, and the source ledger. It is not public; it is available on request.</p>
+          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests. The third edition adds the section above: what was built, what was measured, and what the measurement does not earn.</p>
+          <p>A versioned technical archive sits behind the brief &mdash; the full capability contract, the conformance program, the architecture plates, and the source ledger. It is not public; it is available on request. <a href="./esums/">The measured figure is</a>, in full, with the command that reproduces it &mdash; because a number nobody can check is not evidence.</p>
         </div>
-        <a class="paper-link" href="./paper.pdf">Read the paper</a>
+        <a class="paper-link" href="./paper.pdf">Read the paper &mdash; third edition, September 2026</a>
       </div>
     </section>
   </main>
