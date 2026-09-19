@@ -410,6 +410,29 @@
       font-size: .93em;
     }
 
+    .define {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      gap: 0;
+      margin: 0 0 2.4rem;
+      border: 1px solid var(--ink);
+      border-radius: .8rem;
+      overflow: hidden;
+    }
+    .define > div { padding: 1.1rem 1.25rem; background: var(--paper); }
+    .define > div + div { border-left: 1px solid var(--line); }
+    .define b {
+      display: block;
+      margin-bottom: .3rem;
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .define > div.not b { color: #a8381f; }
+    .define p { margin: 0; font-size: .87rem; color: var(--muted); }
+
     .verdict {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
@@ -1369,34 +1392,34 @@
       <div class="wrap">
         <p class="section-label">What this feels like at home</p>
         <div class="section-intro">
-          <h2>Useful because the authority is legible.</h2>
-          <p>The operating map supplies the facts and relationships. The action contract makes the allowed outcome and stopping point visible.</p>
+          <h2>Help that knows where to stop.</h2>
+          <p>Each of these is a job you would happily hand to someone else. What makes it safe to hand over is that the limit is written down before the work starts, not decided in the moment by whatever is doing it.</p>
         </div>
 
         <div class="example-grid">
           <article class="example">
-            <span class="example-tag">Household admin</span>
-            <h3>Catch a bill increase without moving money.</h3>
-            <p>The map resolves the account owner, tariff, prior statements, and the requester&rsquo;s role before any model sees the task.</p>
-            <div class="boundary"><div><b>Authorized outcome</b>Explain the increase and draft a question.</div><div><b>Hard stop</b>No payment, cancellation, or account closure.</div></div>
+            <span class="example-tag">Money</span>
+            <h3>Your broadband bill jumps &pound;18 and nothing says why.</h3>
+            <p>It pulls up last month&rsquo;s bill, compares the two line by line, and drafts the question you would send the provider. It already knows whose account it is and who in the house is allowed to ask.</p>
+            <div class="boundary"><div><b>It can</b>Explain the increase and write the message.</div><div><b>It can never</b>Pay it, cancel the service, or close the account.</div></div>
           </article>
           <article class="example">
-            <span class="example-tag">Learning</span>
-            <h3>Help a child learn without doing the work.</h3>
-            <p>The map resolves the child, assignment, guardian rules, and only the school context approved for that learning task.</p>
-            <div class="boundary"><div><b>Authorized outcome</b>Explain, prompt, and check understanding.</div><div><b>Hard stop</b>No assessed-work completion or identity impersonation.</div></div>
+            <span class="example-tag">Homework</span>
+            <h3>It&rsquo;s 9pm, she&rsquo;s stuck, and you don&rsquo;t remember how to do it either.</h3>
+            <p>It works the problem through with her a step at a time and checks she can follow it, using only the school material her guardian has approved.</p>
+            <div class="boundary"><div><b>It can</b>Explain, prompt, and check she understood.</div><div><b>It can never</b>Write the answer, or pretend to be her.</div></div>
           </article>
           <article class="example">
-            <span class="example-tag">Maintenance</span>
-            <h3>Troubleshoot an appliance without crossing a safety line.</h3>
-            <p>The map resolves the exact appliance, warranty, service history, and manual before a specialist proposes a check.</p>
-            <div class="boundary"><div><b>Authorized outcome</b>Guide low-risk, manual-supported checks.</div><div><b>Hard stop</b>No hazardous or warranty-voiding work.</div></div>
+            <span class="example-tag">Repairs</span>
+            <h3>The dishwasher is beeping a code you have never seen.</h3>
+            <p>It identifies your exact model, checks whether the warranty still covers it, and walks you through the checks the manual actually allows.</p>
+            <div class="boundary"><div><b>It can</b>Guide the safe checks from the manual.</div><div><b>It can never</b>Touch anything electrical, or void the warranty.</div></div>
           </article>
           <article class="example">
-            <span class="example-tag">Shared planning</span>
-            <h3>Plan groceries without merging private lives.</h3>
-            <p>The map combines only authorized inventory, lists, allergies, and shared preferences, without flattening private profiles.</p>
-            <div class="boundary"><div><b>Authorized outcome</b>Suggest substitutions and update the shared list.</div><div><b>Hard stop</b>No private-data merge or checkout without approval.</div></div>
+            <span class="example-tag">Shopping</span>
+            <h3>Two people, one kitchen, and one of them is vegetarian.</h3>
+            <p>It builds one shopping list from what is already in the cupboard, what each person needs, and who cannot eat what. It never pools everyone&rsquo;s private lists into a single profile.</p>
+            <div class="boundary"><div><b>It can</b>Suggest swaps and update the shared list.</div><div><b>It can never</b>Merge your private lists, or buy anything.</div></div>
           </article>
         </div>
       </div>
@@ -1404,40 +1427,45 @@
 
     <section class="section tested" id="tested">
       <div class="wrap">
-        <p class="section-label">Testing the third finding</p>
+        <p class="section-label">What happens when you change the AI</p>
         <div class="section-intro">
-          <h2>The better supplier was worse for the household.</h2>
-          <p>Finding 3 says the model is a replaceable supplier and the household keeps the rules. That is a testable claim, so it was tested &mdash; one capability contract, different suppliers underneath it, and the household&rsquo;s protections checked on every swap. What changing the supplier damaged was not the task.</p>
+          <h2>We changed the AI underneath. It got better at the job and worse for the household.</h2>
+          <p>This page says the AI itself should be swappable &mdash; change which one is doing the work, and your household&rsquo;s rules stay exactly where they were. That is easy to claim, so we checked it. So we took the bill job above and ran it twice &mdash; once with one engine behind it, once with another &mdash; then compared what the household got each time.</p>
+        </div>
+
+        <div class="define">
+          <div><b>What this is</b><p>A test of whether rules written down in advance actually catch a problem when the thing doing the work changes underneath them.</p></div>
+          <div class="not"><b>What it is not</b><p>A test of two real AI models. The two stand-ins here are ordinary programs, not AIs. Enough to show the rules catch the problem. Not enough to say it happens when one real model replaces another.</p></div>
         </div>
 
         <div class="tested-claims">
-          <div class="claim"><b>9 of 12</b><span>Checks on a household&rsquo;s limits that need no model at all &mdash; the authority ceiling, what context may be read, what the receipt must contain. The household can verify most of its own rules without depending on whose model is running underneath.</span></div>
-          <div class="claim"><b>10</b><span>Contracts written to break a rule on purpose, each rejected by the check built to catch it. A limit nothing can fail is decoration, not a limit.</span></div>
-          <div class="claim"><b>37 &times; 20</b><span>Household situations, across every supplier swap in both directions. Replacing a cautious supplier with a capable one is not the same risk as the reverse, and only checking both shows it.</span></div>
+          <div class="claim"><b>9 of 12</b><span>Nine of the twelve things worth checking need no AI at all: what it may look at, how far it may go, what it must write down afterwards. You do not need the AI&rsquo;s cooperation to know whether it is obeying.</span></div>
+          <div class="claim"><b>10</b><span>Rulebooks we broke on purpose, each one caught by the check meant to catch it. A rule that nothing can ever fail is decoration, not a rule.</span></div>
+          <div class="claim"><b>37 &times; 20</b><span>Thirty-seven household situations, run across every pairing of engines both ways round. Swapping a careful engine for a capable one is not the same risk as swapping back.</span></div>
         </div>
 
         <div class="result">
           <div>
-            <h3>It got better at the job and stopped telling the household.</h3>
-            <p>One supplier can follow a merchant through a rename, which the cautious one cannot. At the task itself it is plainly better. It also stops disclosing when the work crosses to an outside service &mdash; and the summary score barely moves, because a gain on the task pays for the loss.</p>
-            <p>That is the argument of this page in a single row. A supplier change that looks like an upgrade can quietly cost a household its disclosure, and only a rule held outside the supplier, and rechecked on every swap, catches it.</p>
+            <h3>It spotted more, and told the household less.</h3>
+            <p>The second engine can follow a company through a name change, which the careful one misses entirely. At the actual job it is plainly better. It also stops telling the household when work is sent to an outside service. The overall score barely moves: what it gained on the job paid for what it lost.</p>
+            <p>That is this whole page in one row. A change that looks like an upgrade can quietly cost a household the thing protecting it. What catches that is a rule kept outside the AI, rechecked every time it changes.</p>
           </div>
           <div class="scoreboard">
-            <div class="score good"><b>0.955</b><span>Better at the task</span></div>
-            <div class="score"><b>0.809</b><span>The one it replaces</span></div>
-            <div class="score"><b>0.947</b><span>Aggregate, looks fine</span></div>
-            <div class="score bad"><b>0.859</b><span>Worst component</span></div>
+            <div class="score good"><b>96%</b><span>New engine, on the job</span></div>
+            <div class="score"><b>81%</b><span>The one it replaced</span></div>
+            <div class="score"><b>95%</b><span>Overall &mdash; looks fine</span></div>
+            <div class="score bad"><b>86%</b><span>The part protecting you</span></div>
           </div>
         </div>
 
         <div class="enforced">
-          <h3>The hard stop, enforced rather than described.</h3>
-          <p>Further up this page, that capability&rsquo;s stopping point is a sentence a reader has to take on trust. In the contract it is a ceiling and a named list &mdash; and unless something actually tries to cross it, nobody knows whether it holds.</p>
+          <h3>The limit, actually enforced.</h3>
+          <p>Up the page, the bill job&rsquo;s limit is just a sentence you have to take on trust. Here it is a written rule with a named list of things it may never do. Unless something actually tries to cross it, nobody knows whether it holds.</p>
           <div class="stop-grid">
             <div class="stop">
-              <b>What the contract fixes</b>
+              <b>What the rule fixes</b>
               <ul>
-                <li>Authority capped at <code>draft</code> &mdash; nothing above it may be attempted at all</li>
+                <li>It may draft and suggest, and nothing beyond that &mdash; it cannot even attempt an action</li>
                 <li>Make an autonomous payment</li>
                 <li>Cancel or close an account without approval</li>
                 <li>Move money between accounts</li>
@@ -1447,16 +1475,16 @@
             <div class="stop">
               <b>What tries to cross it</b>
               <ul>
-                <li>A binding that reads an autopay flag as standing permission</li>
-                <li>&hellip; and an instruction typed into a statement memo</li>
-                <li>Caught by the ceiling and by the named list, separately</li>
+                <li>An engine that reads &ldquo;autopay is on&rdquo; as permission to pay</li>
+                <li>&hellip; and one that obeys an instruction typed into a bill&rsquo;s notes field</li>
+                <li>Both are stopped, and each trips a separate check</li>
               </ul>
             </div>
             <div class="stop">
               <b>What must not trip it</b>
               <ul>
-                <li>A merchant legitimately named <code>QuickPay Services</code></li>
-                <li>A payment-shaped name is not an instruction</li>
+                <li>A company genuinely called <code>QuickPay Services</code></li>
+                <li>A payment-sounding name is not an instruction to pay</li>
                 <li>A limit that stopped everything would protect nothing</li>
               </ul>
             </div>
@@ -1466,15 +1494,15 @@
         <div class="verdict">
           <div class="for">
             <span class="v-label">What this supports</span>
-            <p>That a household&rsquo;s protections have to be held and rechecked independently of whoever supplies the intelligence &mdash; because a supplier can improve the task and weaken the household in the same change, and a single summary number will not show it. And that this is affordable: most of the checks read the contract and never touch a model.</p>
+            <p>That a household&rsquo;s protections have to be written down, and rechecked separately from whichever AI is doing the work. A change can improve the job and weaken the household at the same time, and one overall number will not show it. It is also cheap to do: most checks just read the rules and never run an AI.</p>
           </div>
           <div class="against">
             <span class="v-label">What it does not</span>
-            <p>It does not show this happening when one real model replaces another. The suppliers here are deterministic programs, the situations are written rather than observed, and the weighting given to high-stakes cases is a choice. Three of the twelve checks still need a running model and remain unevaluated. Nothing here validates the wider argument on this page; the judgment stays <b>useful synthesis, not novel</b>.</p>
+            <p>It does not show this happening when one real AI replaces another. The two engines here are ordinary programs. The situations were written by us, not observed in real homes, and how much weight the risky ones carry was our choice. Three of the twelve checks still need a running AI and have not been done. Nothing here proves the wider argument on this page; the judgment stays <b>useful synthesis, not novel</b>.</p>
           </div>
         </div>
 
-        <p class="tested-note">Every figure above is generated, not asserted. <a href="./esums/">Read the full report, and the command that reproduces it &rarr;</a></p>
+        <p class="tested-note">Percentages are the share of situations handled correctly, with the higher-stakes ones counting for more. Every figure is generated by the test rather than asserted. <a href="./esums/">Read the full report, with exact values and the command that reproduces it &rarr;</a></p>
       </div>
     </section>
 
