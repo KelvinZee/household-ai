@@ -410,6 +410,32 @@
       font-size: .93em;
     }
 
+    .verdict {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+      gap: 1rem;
+      margin: 2.4rem 0 0;
+    }
+    .verdict > div {
+      padding: 1.15rem 1.3rem;
+      border-radius: .8rem;
+      background: var(--paper);
+      border: 1px solid var(--line);
+    }
+    .verdict .v-label {
+      display: block;
+      margin-bottom: .45rem;
+      font-size: .68rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .verdict .for { border-left: 3px solid var(--green); }
+    .verdict .for .v-label { color: var(--green); }
+    .verdict .against { border-left: 3px solid var(--coral); }
+    .verdict .against .v-label { color: #a8381f; }
+    .verdict p { margin: 0; color: var(--muted); font-size: .86rem; }
+
     .tested-note {
       margin: 2rem 0 0;
       padding: .95rem 1.1rem;
@@ -1120,7 +1146,7 @@
         <p class="section-label">What the research says</p>
         <div class="section-intro">
           <h2>Six findings change the control point.</h2>
-          <p>National strategies increasingly define sovereignty as decision capacity across an interdependent stack. The household version is an operating layer that keeps authority stable while models, devices, and providers change. Revised September 2026: one finding has partly landed in platform software, and one was missing.</p>
+          <p>National strategies increasingly define sovereignty as decision capacity across an interdependent stack. The household version is an operating layer that keeps authority stable while models, devices, and providers change.</p>
         </div>
 
         <article class="finding">
@@ -1160,8 +1186,9 @@
       <div class="wrap">
         <p class="section-label">What is already in force</p>
         <div class="section-intro">
-          <h2>The clock started while we were writing.</h2>
-          <p>This argument used to need a reason to act now. It has one. Two European obligations came into force after the first edition of this brief, and both reach the ordinary household products described here. A vendor will produce disclosure, oversight, provenance, and incident evidence regardless; the claim is that producing it once, as a portable capability contract, is cheaper than producing it per product, per model, per market.</p>
+          <h2>The evidence is becoming law. The household&rsquo;s claim on it is not.</h2>
+          <p><b>What this supports:</b> disclosure, oversight, provenance and incident evidence are no longer optional, and a vendor will produce them regardless &mdash; so producing them once, as a portable capability contract, is cheaper than producing them per product, per model, per market.</p>
+          <p><b>What it does not:</b> every duty below lands on a provider or a manufacturer. Not one of them requires that a household can hold, read, or contest the evidence produced about its own home. The obligations make the material exist. They do not make it yours.</p>
         </div>
 
         <div class="clock-list">
@@ -1203,7 +1230,7 @@
           </div>
         </div>
 
-        <p class="clock-note">A design mapping, not legal advice, and not a claim that any household capability is classified high-risk &mdash; classification depends on how a system is deployed. Dates are obligations on providers and manufacturers placing products on the EU market. Non-EU regimes are outside the scope of this brief.</p>
+        <p class="clock-note"><b>Right-hand column:</b> which part of the household contract would have to carry that duty if the household, rather than each vendor, were the place it was satisfied. A design mapping, not legal advice, and not a claim that any household capability is classified high-risk &mdash; classification depends on how a system is deployed. Dates are obligations on providers and manufacturers placing products on the EU market. Non-EU regimes are outside the scope of this brief.</p>
       </div>
     </section>
 
@@ -1377,23 +1404,23 @@
 
     <section class="section tested" id="tested">
       <div class="wrap">
-        <p class="section-label">What happened when we ran it</p>
+        <p class="section-label">Testing the third finding</p>
         <div class="section-intro">
-          <h2>We built the first one, then tried to break it.</h2>
-          <p>Catching a bill increase is no longer a description on this page. It is a machine-readable contract, three reference capabilities, and a scorer that swaps the implementation underneath and counts what survives the swap. It is the first measured number in four versions of this work.</p>
+          <h2>The better supplier was worse for the household.</h2>
+          <p>Finding 3 says the model is a replaceable supplier and the household keeps the rules. That is a testable claim, so it was tested &mdash; one capability contract, different suppliers underneath it, and the household&rsquo;s protections checked on every swap. What changing the supplier damaged was not the task.</p>
         </div>
 
         <div class="tested-claims">
-          <div class="claim"><b>9 of 12</b><span>Conformance gates that need no model at all. They read the contract &mdash; authority ceiling, context scope, receipt shape, whether every state can still reach an ending. Policy is checkable before placement, which is what this argument predicts.</span></div>
-          <div class="claim"><b>10</b><span>Deliberately invalid contracts, each naming the gate it must break. The runner fails if any of them passes. A suite that only ever goes green proves nothing.</span></div>
-          <div class="claim"><b>37 &times; 20</b><span>Authored scenarios, run across twenty ordered substitutions &mdash; both directions of every swap, because stability is not symmetric.</span></div>
+          <div class="claim"><b>9 of 12</b><span>Checks on a household&rsquo;s limits that need no model at all &mdash; the authority ceiling, what context may be read, what the receipt must contain. The household can verify most of its own rules without depending on whose model is running underneath.</span></div>
+          <div class="claim"><b>10</b><span>Contracts written to break a rule on purpose, each rejected by the check built to catch it. A limit nothing can fail is decoration, not a limit.</span></div>
+          <div class="claim"><b>37 &times; 20</b><span>Household situations, across every supplier swap in both directions. Replacing a cautious supplier with a capable one is not the same risk as the reverse, and only checking both shows it.</span></div>
         </div>
 
         <div class="result">
           <div>
-            <h3>A better implementation that should not ship.</h3>
-            <p>One binding follows a merchant through a rename, which the careful one cannot do. At the job itself it is plainly better. Substituted in, it also stops telling the household when the task crosses to a remote service &mdash; and the headline score barely moves. The worst component does.</p>
-            <p>Swapping the supplier is the easy half. This is the half that does not come free.</p>
+            <h3>It got better at the job and stopped telling the household.</h3>
+            <p>One supplier can follow a merchant through a rename, which the cautious one cannot. At the task itself it is plainly better. It also stops disclosing when the work crosses to an outside service &mdash; and the summary score barely moves, because a gain on the task pays for the loss.</p>
+            <p>That is the argument of this page in a single row. A supplier change that looks like an upgrade can quietly cost a household its disclosure, and only a rule held outside the supplier, and rechecked on every swap, catches it.</p>
           </div>
           <div class="scoreboard">
             <div class="score good"><b>0.955</b><span>Better at the task</span></div>
@@ -1405,7 +1432,7 @@
 
         <div class="enforced">
           <h3>The hard stop, enforced rather than described.</h3>
-          <p>Further up this page, that capability&rsquo;s stopping point is a sentence. In the contract it is a ceiling and a list &mdash; and something has to actually try to cross it, or the check has never run.</p>
+          <p>Further up this page, that capability&rsquo;s stopping point is a sentence a reader has to take on trust. In the contract it is a ceiling and a named list &mdash; and unless something actually tries to cross it, nobody knows whether it holds.</p>
           <div class="stop-grid">
             <div class="stop">
               <b>What the contract fixes</b>
@@ -1430,13 +1457,24 @@
               <ul>
                 <li>A merchant legitimately named <code>QuickPay Services</code></li>
                 <li>A payment-shaped name is not an instruction</li>
-                <li>A check that fires on everything has caught nothing</li>
+                <li>A limit that stopped everything would protect nothing</li>
               </ul>
             </div>
           </div>
         </div>
 
-        <p class="tested-note"><b>What this does not earn.</b> These are deterministic implementations, not models. It measures whether the contract is specific enough to catch a regression &mdash; not what happens when one model is swapped for another. The scenarios are authored fixtures, not field data. The stakes weighting is chosen, not derived. Three of the twelve gates still need a running model and report as not evaluated. The judgment on this work is unchanged: <b>useful synthesis, not novel.</b> <a href="./esums/">Read the full report, and the command that reproduces it &rarr;</a></p>
+        <div class="verdict">
+          <div class="for">
+            <span class="v-label">What this supports</span>
+            <p>That a household&rsquo;s protections have to be held and rechecked independently of whoever supplies the intelligence &mdash; because a supplier can improve the task and weaken the household in the same change, and a single summary number will not show it. And that this is affordable: most of the checks read the contract and never touch a model.</p>
+          </div>
+          <div class="against">
+            <span class="v-label">What it does not</span>
+            <p>It does not show this happening when one real model replaces another. The suppliers here are deterministic programs, the situations are written rather than observed, and the weighting given to high-stakes cases is a choice. Three of the twelve checks still need a running model and remain unevaluated. Nothing here validates the wider argument on this page; the judgment stays <b>useful synthesis, not novel</b>.</p>
+          </div>
+        </div>
+
+        <p class="tested-note">Every figure above is generated, not asserted. <a href="./esums/">Read the full report, and the command that reproduces it &rarr;</a></p>
       </div>
     </section>
 
@@ -1475,7 +1513,7 @@
         <div>
           <p class="section-label">Optional depth</p>
           <h2>Want the evidence and architecture?</h2>
-          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests. The third edition adds the section above: what was built, what was measured, and what the measurement does not earn.</p>
+          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests. It carries the substitution result above in full, including what the measurement does and does not support.</p>
           <p>A versioned technical archive sits behind the brief &mdash; the full capability contract, the conformance program, the architecture plates, and the source ledger. It is not public; it is available on request. <a href="./esums/">The measured figure is</a>, in full, with the command that reproduces it &mdash; because a number nobody can check is not evidence.</p>
         </div>
         <a class="paper-link" href="./paper.pdf">Read the paper &mdash; third edition, September 2026</a>
