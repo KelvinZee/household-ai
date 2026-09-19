@@ -6,6 +6,7 @@
   <meta name="description" content="Sovereign AI at human scale: the household owns its context, permissions, actions, evidence, and exit path while models remain replaceable.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://kelvinzee.github.io/household-ai/">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kelvinzee.github.io/household-ai/">
   <meta property="og:site_name" content="Household AI">
@@ -275,6 +276,49 @@
       line-height: 1.05;
     }
     .finding p { margin: .2rem 0 0; color: var(--muted); }
+
+    .clock { border-bottom: 1px solid var(--line); }
+    .clock-list {
+      margin: 2.4rem 0 0;
+      border-top: 1px solid var(--ink);
+    }
+    .clock-row {
+      display: grid;
+      grid-template-columns: 8.5rem 7rem minmax(0, 1fr) minmax(0, .8fr);
+      gap: 1.2rem;
+      align-items: baseline;
+      padding: 1.05rem .6rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .clock-row.live { background: var(--soft-green); }
+    .clock-date {
+      font-weight: 850;
+      font-size: .92rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .clock-state {
+      justify-self: start;
+      padding: .2rem .6rem;
+      border-radius: 1rem;
+      background: var(--line);
+      color: var(--ink);
+      font-size: .63rem;
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .clock-row.live .clock-state { background: var(--ink); color: var(--lime); }
+    .clock-what b { display: block; font-size: .92rem; }
+    .clock-what span { color: var(--muted); font-size: .8rem; }
+    .clock-maps { color: var(--green); font-size: .76rem; font-weight: 720; }
+    .clock-note {
+      margin: 1.6rem 0 0;
+      padding: .9rem 1rem;
+      border-left: 3px solid var(--coral);
+      background: var(--panel);
+      color: var(--muted);
+      font-size: .82rem;
+    }
 
     .how {
       background: var(--ink);
@@ -851,6 +895,9 @@
       .job-board { max-width: 34rem; transform: rotate(.6deg); }
       .section-intro { grid-template-columns: 1fr; align-items: start; }
       .finding { grid-template-columns: 3.7rem minmax(0, .8fr) minmax(0, 1.2fr); }
+      .clock-row { grid-template-columns: 8rem 1fr; gap: .5rem 1rem; }
+      .clock-state { grid-column: 2; justify-self: start; }
+      .clock-what, .clock-maps { grid-column: 2; }
       .arch-layout { grid-template-columns: 1fr; }
       .arch-stage { border-right: 0; border-bottom: 1px solid #596159; }
       .arch-map { grid-template-columns: 1fr; grid-template-rows: none; gap: 1.7rem; }
@@ -931,6 +978,7 @@
       <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>Household AI</a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="#findings">Findings</a>
+        <a href="#clock">In force</a>
         <a href="#how">Control loop</a>
         <a href="#examples">Examples</a>
         <a href="#implications">Implications</a>
@@ -964,8 +1012,8 @@
       <div class="wrap">
         <p class="section-label">What the research says</p>
         <div class="section-intro">
-          <h2>Five findings change the control point.</h2>
-          <p>National strategies increasingly define sovereignty as decision capacity across an interdependent stack. The household version is an operating layer that keeps authority stable while models, devices, and providers change.</p>
+          <h2>Six findings change the control point.</h2>
+          <p>National strategies increasingly define sovereignty as decision capacity across an interdependent stack. The household version is an operating layer that keeps authority stable while models, devices, and providers change. Revised September 2026: one finding has partly landed in platform software, and one was missing.</p>
         </div>
 
         <article class="finding">
@@ -980,8 +1028,8 @@
         </article>
         <article class="finding">
           <span class="finding-number">3</span>
-          <h3>The model is a replaceable supplier.</h3>
-          <p>A capability should keep the same task boundary, context contract, quality bar, approval rule, and recovery path even when the underlying model or execution service changes.</p>
+          <h3>Replacing the model is now the easy part.</h3>
+          <p>Platform software has taken this mechanism: an operating-system framework now accepts any model provider behind one interface, and the common tool protocol renders supplier interfaces on a shared consent path. What substitution still does not carry is the interesting part &mdash; replaying the evidence that a capability behaves the same, keeping authority bound to it, preserving a recorded objection, and leaving a receipt someone can contest. A capability should hold its task boundary, context contract, quality bar, approval rule, and recovery path across the swap. The swap itself is no longer the claim.</p>
         </article>
         <article class="finding">
           <span class="finding-number">4</span>
@@ -993,6 +1041,62 @@
           <h3>Exit, continuity, and evidence are the test.</h3>
           <p>A sovereign household can keep safe functions working through outages, substitute approved providers, export its map and policies, and show who used what context, which route ran, what changed, and how to undo it.</p>
         </article>
+        <article class="finding">
+          <span class="finding-number">6</span>
+          <h3>Someone is always overruled. Record it.</h3>
+          <p>A household is not one user, and a quorum is not a consensus. A guardian can be outvoted, a teenager may object to a grant made over them, a caregiver and an adult child may disagree about an older parent&rsquo;s home. A system that stores only the decision has thrown away the objection. Published analysis of the current agent protocols finds none of them can express dissent at all &mdash; so the record of who disagreed, what it did to the grant, and how to revisit it has to live in the household layer or nowhere.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section clock" id="clock">
+      <div class="wrap">
+        <p class="section-label">What is already in force</p>
+        <div class="section-intro">
+          <h2>The clock started while we were writing.</h2>
+          <p>This argument used to need a reason to act now. It has one. Two European obligations came into force after the first edition of this brief, and both reach the ordinary household products described here. A vendor will produce disclosure, oversight, provenance, and incident evidence regardless; the claim is that producing it once, as a portable capability contract, is cheaper than producing it per product, per model, per market.</p>
+        </div>
+
+        <div class="clock-list">
+          <div class="clock-row live">
+            <span class="clock-date">2 Aug 2026</span>
+            <span class="clock-state">In force</span>
+            <span class="clock-what"><b>EU AI Act, Article 50</b><span>People must be told when they are interacting with an AI system, and synthetic content must be marked.</span></span>
+            <span class="clock-maps">Context grant &middot; Action receipt</span>
+          </div>
+          <div class="clock-row live">
+            <span class="clock-date">11 Sep 2026</span>
+            <span class="clock-state">In force</span>
+            <span class="clock-what"><b>Cyber Resilience Act, Article 14</b><span>Exploited vulnerabilities and severe incidents reported in 24 hours, notified in 72, closed in 14 days &mdash; including products already in homes.</span></span>
+            <span class="clock-maps">Capability lease &middot; Evidence duty</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-date">2 Dec 2026</span>
+            <span class="clock-state">Next</span>
+            <span class="clock-what"><b>Article 50 marking grace ends</b><span>The narrower marking duty reaches systems already deployed.</span></span>
+            <span class="clock-maps">Action receipt</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-date">2 Dec 2027</span>
+            <span class="clock-state">Deferred</span>
+            <span class="clock-what"><b>AI Act high-risk regime, Annex III</b><span>Moved back sixteen months from August 2026. Conformity documentation, risk management, and human oversight.</span></span>
+            <span class="clock-maps">Conformance &middot; Authority &middot; Dissent</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-date">11 Dec 2027</span>
+            <span class="clock-state">Upcoming</span>
+            <span class="clock-what"><b>Cyber Resilience Act, full conformity</b><span>CE marking and conformity assessment for products with digital elements.</span></span>
+            <span class="clock-maps">Capability lease &middot; Provenance</span>
+          </div>
+          <div class="clock-row">
+            <span class="clock-date">2 Aug 2028</span>
+            <span class="clock-state">Upcoming</span>
+            <span class="clock-what"><b>AI Act, Annex I embedded</b><span>High-risk duties for AI built into already-regulated products.</span></span>
+            <span class="clock-maps">Conformance &middot; Provenance</span>
+          </div>
+        </div>
+
+        <p class="clock-note">A design mapping, not legal advice, and not a claim that any household capability is classified high-risk &mdash; classification depends on how a system is deployed. Dates are obligations on providers and manufacturers placing products on the EU market. Non-EU regimes are outside the scope of this brief.</p>
       </div>
     </section>
 
@@ -1199,7 +1303,8 @@
         <div>
           <p class="section-label">Optional depth</p>
           <h2>Want the evidence and architecture?</h2>
-          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests.</p>
+          <p>The paper maps current sovereign-AI thinking to the household, defines the operating graph and typed-action control loop, and states the continuity, portability, and falsification tests. The second edition, September 2026, adds what is now in force, narrows the substitution claim, and expands the sources from twenty to thirty-two.</p>
+          <p>A versioned technical archive sits behind the brief &mdash; the full capability contract, the conformance program, the architecture plates, and the source ledger. It is not public; it is available on request.</p>
         </div>
         <a class="paper-link" href="./paper.pdf">Read the paper</a>
       </div>
@@ -1207,7 +1312,7 @@
   </main>
 
   <footer>
-    <div class="wrap"><span>Sovereign AI at human scale.</span><span>Research synthesis and design hypothesis, not empirical validation.</span></div>
+    <div class="wrap"><span>Sovereign AI at human scale.</span><span>Research synthesis and design hypothesis, not empirical validation. Last updated September 2026.</span></div>
   </footer>
 
   <script>
